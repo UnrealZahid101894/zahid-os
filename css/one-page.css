@@ -9,7 +9,7 @@
   body.one main > h1 { display: none; }
   body.one #panel { max-width: none; }
   body.one #panel > * { animation: none; }
-  #s-home { padding: calc(var(--hh) + clamp(32px, 5.5vw, 104px)) var(--hp) clamp(32px, 4vw, 72px); }
+  #s-home { padding: calc(var(--hh) + clamp(8px, 1.2vw, 20px)) var(--hp) clamp(32px, 4vw, 72px); }
   #s-connect { padding: 0 clamp(20px, 2.9vw, 52px) 32px; }
   /* about: lock -> 1 scroll (40vh) to read -> letters fall -> 2 more scrolls. 100 + 120 = 220vh */
   .ab-scene { height: 220vh; height: 220dvh; }

@@ -38,7 +38,7 @@ export function initConnect() {
   const iv = setInterval(time, 15000); time(); fit(); cmeas(); tick();
   if (document.fonts) document.fonts.ready.then(onResize);
   form.addEventListener("submit", e => { e.preventDefault(); const d = new FormData(form);
-    location.href = "mailto:your-email@example.com?subject=" + encodeURIComponent("Project inquiry from " + d.get("name")) +
+    location.href = "mailto:jahidulislam01018940@gmail.com?subject=" + encodeURIComponent("Project inquiry from " + d.get("name")) +
       "&body=" + encodeURIComponent(`Name: ${d.get("name")}\nPhone: ${d.get("phone")}\nEmail: ${d.get("email")}\n\n${d.get("msg")}`); });
   return () => { removeEventListener("scroll", req); removeEventListener("resize", onResize); clearInterval(iv); cancelAnimationFrame(craf); };
 }

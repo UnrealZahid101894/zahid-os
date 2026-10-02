@@ -36,3 +36,6 @@ export function initHomeDrop() {
     mo.observe(ld, { attributes: true, attributeFilter: ["class"] }); setTimeout(start, 9000); }
 }
 /* ---------- ONE PAGE: sections are stacked; the nav scrolls to them and text animates in as you arrive ---------- */
+/* home hero: file tree that draws itself in as the user scrolls.
+   Each row reads --q (0 → 1) and grows its trunk, elbow and label
+   with a stagger, so the whole tree blooms downward from the root. */

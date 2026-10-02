@@ -55,13 +55,14 @@ export const PANELS = {
     </form>
     <div class="info">
       <div>
-        <a class="big2" href="tel:+8800000000000">+880 1X XXX XXXXX</a>
-        <a class="big2" href="mailto:your-email@example.com">your-email@example.com</a>
+        <a class="big2" href="tel:+8801613699448">+880 161 369 9448</a>
+        <a class="big2" href="mailto:jahidulislam01018940@gmail.com">jahidulislam01018940@gmail.com</a>
       </div>
       <div class="soc">
         <a class="ul" href="https://www.instagram.com/__lost.from_light.__/" target="_blank" rel="noopener">Instagram<span class="ar">↗</span></a>
         <a class="ul" href="https://t.me/" target="_blank" rel="noopener">Telegram<span class="ar">↗</span></a>
         <a class="ul" href="https://www.facebook.com/Sunless.101894" target="_blank" rel="noopener">Facebook<span class="ar">↗</span></a>
+        <a class="ul" href="https://wa.me/8801613699448" target="_blank" rel="noopener">WhatsApp<span class="ar">↗</span></a>
       </div>
       <div class="row2">
         <nav class="lk" aria-label="Site links"><a href="#about" data-go="about">About me</a><a href="#services" data-go="services">Stack</a><a href="#works" data-go="works">Works</a></nav>
