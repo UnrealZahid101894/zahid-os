@@ -1,0 +1,26 @@
+/* ---------- ONE PAGE: every section stacked on a single scroll ---------- */
+  body.one { --e: cubic-bezier(.16, 1, .3, 1); --hp: clamp(16px, 2.1vw, 40px); --pad: clamp(18px, 1.9vw, 32px); --hh: 104px; }
+  body.one header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; max-width: none; margin: 0;
+    padding: calc(16px + env(safe-area-inset-top, 0px)) var(--pad) 10px;
+    background: transparent;
+    transition: transform .7s var(--e); }
+  body.one header.away { transform: translateY(-101%); }
+  body.one main { max-width: none; padding: 0; }
+  body.one main > h1 { display: none; }
+  body.one #panel { max-width: none; }
+  body.one #panel > * { animation: none; }
+  #s-home { padding: calc(var(--hh) + clamp(32px, 5.5vw, 104px)) var(--hp) clamp(32px, 4vw, 72px); }
+  #s-connect { padding: 0 clamp(20px, 2.9vw, 52px) 32px; }
+  /* about: lock -> 1 scroll (40vh) to read -> letters fall -> 2 more scrolls. 100 + 120 = 220vh */
+  .ab-scene { height: 220vh; height: 220dvh; }
+  /* scroll reveals: .rc = text wipes up from a mask, .rv = block fades and rises */
+  .rv { opacity: 0; transform: translate3d(0, 44px, 0); transition: opacity 1.5s cubic-bezier(.22, 1, .36, 1), transform 1.9s cubic-bezier(.19, 1, .22, 1); transition-delay: var(--rd, 0s); }
+  .rv.in { opacity: 1; transform: none; }
+  .rc { opacity: 0; transform: translate3d(0, 55%, 0); transition: opacity 1.2s cubic-bezier(.22, 1, .36, 1), transform 2s cubic-bezier(.19, 1, .22, 1); transition-delay: var(--rd, 0s); }
+  .rc.in { opacity: 1; transform: none; }
+  body.one .acc .col { animation-play-state: paused; }
+  body.one .acc.in .col { animation-play-state: running; }
+  @media (prefers-reduced-motion: reduce) { .rv, .rc { transition: none; } body.one header { transition: none; } }
+
+
+  

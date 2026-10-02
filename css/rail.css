@@ -1,0 +1,22 @@
+/* ---------- scroll rail: replaces the native scrollbar ---------- */
+  html { scrollbar-width: none; -ms-overflow-style: none; }
+  html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; width: 0; height: 0; }
+  #rail { position: fixed; right: clamp(8px, 1.3vw, 20px); top: 50%; height: min(48vh, 440px); width: 30px; margin-top: calc(min(48vh, 440px) / -2); z-index: 2147482000;
+    color: var(--fg); --rb: var(--bg); transition: opacity .5s ease; }
+  html.wk-open #rail { opacity: 0; pointer-events: none; }
+  #rail .rl-l, #rail .rl-f { position: absolute; right: 6px; top: 0; width: 1px; height: 100%; background: currentColor; }
+  #rail .rl-l { opacity: .22; }
+  #rail .rl-f { transform-origin: 50% 0; transform: scaleY(0); will-change: transform; }
+  #rail .rl-th { position: absolute; right: 4px; top: -2.5px; width: 5px; height: 5px; background: currentColor; will-change: transform; }
+  #rail .rl-t { position: absolute; right: 0; width: 30px; height: 20px; margin: -10px 0 0; padding: 0; background: none; border: 0; cursor: pointer; outline: none; color: inherit; -webkit-tap-highlight-color: transparent; }
+  #rail .rl-t b { position: absolute; right: 3px; top: 50%; width: 7px; height: 7px; margin-top: -3.5px; border: 1px solid currentColor; background: var(--rb); transition: background .4s ease, transform .6s cubic-bezier(.19, 1, .22, 1); }
+  #rail .rl-t.on b, #rail .rl-t:hover b, #rail .rl-t:focus-visible b { background: currentColor; transform: scale(1.25); }
+  #rail .rl-n { position: absolute; right: 22px; top: 50%; white-space: nowrap; font: 500 10px/1 "Spline Sans Mono", ui-monospace, Menlo, Consolas, monospace; letter-spacing: .16em; text-transform: uppercase;
+    opacity: 0; transform: translate3d(8px, -50%, 0); transition: opacity .45s ease, transform .7s cubic-bezier(.19, 1, .22, 1); pointer-events: none; }
+  #rail .rl-t.on .rl-n { opacity: .9; transform: translate3d(0, -50%, 0); }
+  #rail:hover .rl-n, #rail:focus-within .rl-n { opacity: .55; transform: translate3d(0, -50%, 0); }
+  #rail .rl-t:hover .rl-n, #rail .rl-t:focus-visible .rl-n { opacity: 1; }
+  #rail.inv { color: var(--bg); --rb: var(--fg); }
+  @media (max-width: 720px) { #rail { display: none; } }
+
+  

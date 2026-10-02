@@ -1,0 +1,89 @@
+/* about: giant title, inverted block, breakable headline */
+  .is-about main { max-width: none; padding: 0; }
+  .is-about main > h1 { display: none; }
+  .is-about #panel { max-width: none; }
+  .is-about #panel > * { animation: none; }
+  .ab { --c: "Barlow Condensed", "Arial Narrow", sans-serif; --m: "Spline Sans Mono", ui-monospace, Menlo, Consolas, monospace; text-transform: uppercase; }
+  .ab-t { margin: 0; padding: 1.2vw 0 2.6vw; text-align: center; font: 700 14vw/.8 var(--c); letter-spacing: -.035em; word-spacing: -.04em; }
+  .ab-b { position: sticky; top: -1px; z-index: 1; overflow: hidden; height: calc(100vh + 2px); height: calc(100dvh + 2px); background: var(--fg); color: var(--bg); padding: 3.2vw 2.7vw 7vw; user-select: none; -webkit-user-select: none; touch-action: pan-y; }
+  .ab-r { display: grid; grid-template-columns: calc(30vw - 2.7vw) 1fr auto; align-items: center; }
+  .ab-r b { font: 700 2.6vw/1 var(--c); }
+  .ab-r span { font: 400 1.25vw/1 var(--m); letter-spacing: .02em; }
+  .ab-r b:last-child { font-size: 2.1vw; letter-spacing: -.03em; }
+  .ab-h { margin: 5vw 0 0 calc(30vw - 2.7vw); font: 700 clamp(40px, 7.9vw, 170px)/.9 var(--c); letter-spacing: -.01em; }
+  .ab-h .ln { display: block; white-space: nowrap; }
+  .ab-h .d { color: color-mix(in srgb, var(--bg) 62%, var(--fg)); }
+  .ab-h .w { display: inline-block; white-space: nowrap; }
+  .ab-c { display: inline-block; will-change: transform; }
+  .ab-hint, .ab-x { position: absolute; bottom: 2vw; z-index: 3; font: 400 12px/1 var(--m); letter-spacing: .06em; opacity: .6; }
+  .ab-hint { left: 2.7vw; pointer-events: none; }
+  .ab-x { right: 2.7vw; background: none; border: 0; padding: 8px 0; color: inherit; cursor: pointer; }
+  .ab-x:hover { opacity: 1; }
+  /* about: curtain drops from above, then the storyboard */
+  .ab-scene { position: relative; height: 200vh; height: 200dvh; overflow: clip; }
+  @media (max-width: 720px) {
+    .ab-t { font-size: 19vw; } .ab-r { grid-template-columns: auto 1fr auto; gap: 12px; }
+    .ab-r b { font-size: 7vw; } .ab-r span { font-size: 3vw; } .ab-r b:last-child { font-size: 6vw; }
+    .ab-h { margin: 12vw 0 0; font-size: 13.5vw; }
+  }
+
+  /* about: breathing room above, and the heading is a mask the letters fall through (driven by scroll, centre letters first) */
+  #s-about { padding-top: clamp(96px, 16vw, 280px); }
+  .ab-t { position: relative; overflow: clip; }
+  .ab-t .ac { display: inline-block; will-change: transform; transform-origin: 50% 100%; }
+  .cw { display: inline-block; white-space: nowrap; }
+  .cl { display: inline-block; will-change: transform; transform-origin: 50% 100%; }
+  .ab-t .ac.sp { width: .22em; }
+  .wk-t { --c: "Barlow Condensed", "Arial Narrow", sans-serif; text-transform: uppercase; }
+
+  /* about: the two instructions are solid pills with a halo in the block colour, so fallen letters can never swallow them */
+  .ab-hint, .ab-x { z-index: 8; display: inline-flex; align-items: center; gap: .7em; padding: .95em 1.4em; border: 1px solid var(--bg); border-radius: 999px;
+    background: var(--fg); color: var(--bg); box-shadow: 0 0 0 10px var(--fg); opacity: 1; font: 500 clamp(11px, .9vw, 14px)/1 var(--m); letter-spacing: .1em; }
+  .ab-x { transition: background .3s ease, color .3s ease, transform .4s cubic-bezier(.16, 1, .3, 1); }
+  .ab-x:hover, .ab-x:focus-visible { background: var(--bg); color: var(--fg); transform: scale(1.05); outline: none; }
+  .ab-x:active { transform: scale(.96); }
+  .ab-b.pop .ab-x { animation: abpop .8s cubic-bezier(.16, 1, .3, 1) both, abpulse 1.8s ease-in-out .9s 3; }   /* pops in as the letters drop, then pulses a few times */
+  @keyframes abpop { from { opacity: 0; transform: translateY(18px) scale(.85); } to { opacity: 1; transform: none; } }
+  @keyframes abpulse { 50% { transform: scale(1.07); } }
+  @media (prefers-reduced-motion: reduce) { .ab-b.pop .ab-x { animation: none; } }
+
+  /* ---------- ABOUT, part 2: a black curtain (same colour as the breakable block, no lines) falls over it. Screen 1 = headline + text, then it pans to screen 2 = photos + text. All scrubbed by scroll. ---------- */
+  .ab-scene { height: 600vh; height: 600dvh; }   /* read, letters fall, curtain falls (to 200vh), screen 1 text (to 300vh), pan (to 410vh), screen 2 (to 485vh), hold */
+  .ab-cur { position: absolute; inset: 0; z-index: 6; overflow: hidden; color: var(--bg); background: var(--fg); pointer-events: none; will-change: transform;
+    border-radius: 0 0 var(--rad, 0px) var(--rad, 0px); transform: translate3d(0, calc(-100% - 80px), 0); }
+  .ab-pgs { position: absolute; left: 0; right: 0; top: 0; height: 200%; will-change: transform; }
+  .ab-pg { position: relative; height: 50%; display: flex; flex-direction: column; gap: 8vw; padding: 15vw 5vw 6vw; }
+  .ab-q { margin: 0; font: 300 7.6vw/1.08 var(--m); text-transform: uppercase; letter-spacing: -.02em; color: color-mix(in srgb, var(--bg) 58%, var(--fg)); }
+  .ab-p { margin: 0; font: 400 12px/1.6 var(--m); text-transform: uppercase; }
+  .ab-lb { display: block; margin: 0 0 -5vw; font: 400 11px/1 var(--m); text-transform: uppercase; letter-spacing: .04em; color: color-mix(in srgb, var(--bg) 58%, var(--fg)); }
+  .ab-phs { display: flex; align-items: flex-start; gap: 5vw; }
+  .ab-im { margin: 0; overflow: hidden; background: color-mix(in srgb, var(--bg) 10%, var(--fg)); clip-path: inset(0 0 calc((1 - var(--q, 0)) * 100%) 0); }
+  .ab-im img { display: block; width: 100%; height: 100%; object-fit: cover; transform: scale(calc(1.14 - var(--q, 0) * .14)); }
+  .im1 { width: 42vw; aspect-ratio: 245 / 275; } .im2 { width: 31vw; aspect-ratio: 200 / 344; margin-top: 10vw; } .im2 img { object-position: 52% 30%; }
+  .ab-lk { display: inline-flex; align-items: center; gap: .7em; align-self: flex-start; padding-bottom: .5em; border-bottom: 1px solid currentColor; color: var(--bg); text-decoration: none; text-transform: uppercase; font: 500 13px/1 var(--m); letter-spacing: .02em;
+    pointer-events: auto; opacity: var(--q, 0); translate: 0 calc((1 - var(--q, 0)) * 14px); transition: color .3s ease; }
+  .ab-lk i { font-style: normal; display: inline-block; transition: transform .5s cubic-bezier(.16, 1, .3, 1); }
+  .ab-lk:hover, .ab-lk:focus-visible { color: color-mix(in srgb, var(--bg) 60%, var(--fg)); outline: none; } .ab-lk:hover i, .ab-lk:focus-visible i { transform: translate(3px, -3px); }
+  .rl { display: block; overflow: hidden; padding: .06em 0 .1em; margin: -.06em 0 -.1em; }
+  .rli { display: block; transform: translate3d(0, calc((1 - var(--q, 0)) * 110%), 0); opacity: calc(.15 + var(--q, 0) * .85); will-change: transform; }
+  @media (min-width: 721px) {
+    .ab-pg { display: block; padding: 0; }
+    .ab-phs { display: contents; }
+    .ab-q, .ab-p, .ab-lb, .ab-im, .ab-lk { position: absolute; }
+    .ab-q { left: 2.7vw; top: 3vw; max-width: 20ch; font-size: clamp(26px, 4.7vw, 86px); line-height: 1.04; }
+    .ab-p { font-size: clamp(11px, 1.3vw, 22px); line-height: 1.5; text-align: center; }
+    .ab-lb { margin: 0; font-size: clamp(11px, 1.25vw, 20px); }
+    .ab-p.p1 { left: 36.5%; top: 32%; width: 30.5%; }
+    .ab-lb.l2 { left: 58.5%; top: 56%; }
+    .ab-p.p2 { left: 58.5%; top: 64%; width: 32.5%; }
+    .im1 { left: 8.5%; top: 11.8%; width: min(17.3vw, 31vh); margin: 0; }
+    .im2 { left: 30.2%; top: 11.8%; width: min(14.1vw, 24vh); margin: 0; }
+    .ab-lk { left: 30.2%; top: calc(11.8% + min(24.3vw, 41.4vh) + 3.6vh); font-size: clamp(12px, 1.5vw, 24px); }
+    .ab-lb.l3 { left: 63.2%; top: 12%; }
+    .ab-p.p3 { left: 63.2%; top: 20.5%; width: 33.5%; }
+    .ab-p.p4 { left: 63.2%; top: 62%; width: 33.5%; }
+  }
+  @media (max-width: 720px) { .ab-t.wk-t { font-size: 15vw; } }
+  @media (prefers-reduced-motion: reduce) { .ab-cur { transition: none; } }
+
+  

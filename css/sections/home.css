@@ -1,0 +1,33 @@
+/* ---------- HOME page ---------- */
+  .is-home { --hp: clamp(16px, 2.1vw, 40px); }
+  .is-home header { max-width: none; padding-left: var(--hp); padding-right: var(--hp); }
+  .is-home main { max-width: none; padding: 0 var(--hp) clamp(32px, 4vw, 72px); }
+  .is-home main > h1 { display: none; }
+  .is-home #panel { max-width: none; }
+  .is-home #panel > * { animation: none; }
+  .hm { --c: "Barlow Condensed", "Arial Narrow", sans-serif; --m: "Spline Sans Mono", ui-monospace, Menlo, Consolas, monospace; text-transform: uppercase; }
+  .hm-h { position: relative; z-index: 2; margin: -.06em 0 0; width: max-content; font: 800 100px/.8 var(--c); letter-spacing: -.02em; word-spacing: -.04em; white-space: nowrap; pointer-events: none; }
+  .hm-h.two { width: auto; }
+  .hm-h .hl { display: inline-block; will-change: transform; }
+  .hm-h.two span { display: block; width: max-content; }
+  .hm-stage { display: grid; grid-template-columns: 1fr 40% 1fr; margin-top: clamp(28px, 3.2vw, 60px); }
+  .hm-card { grid-column: 2; grid-row: 1; position: relative; aspect-ratio: 711 / 427; }
+  .hm-card::before { content: ""; position: absolute; inset: 0; background: var(--fg); opacity: .05; }
+  .hm-photo { position: absolute; z-index: 1; right: 4.2%; bottom: 6.8%; width: 58.8%; aspect-ratio: 418 / 477; object-fit: cover; object-position: 50% 18%; display: block; }
+  .hm-list { position: absolute; z-index: 2; left: 0; bottom: 4.5%; margin: 0; padding: 0; list-style: none; font: 600 clamp(20px, 1.7vw, 34px)/1.45 var(--c); letter-spacing: -.02em; }
+  .hm-based { grid-column: 3; grid-row: 1; align-self: start; margin-top: calc(-1em - 10px); display: flex; justify-content: space-between;
+    font: 700 clamp(11px, .85vw, 16px)/1 var(--c); letter-spacing: .85em; }
+  .hm-based span:last-child { margin-right: -.85em; }
+  #panel .hm-intro { grid-column: 1 / -1; justify-self: center; text-align: center; max-width: 43ch; margin: clamp(28px, 2.6vw, 48px) 0 0; font: 300 clamp(13px, .95vw, 17px)/1.5 var(--m); }
+  @media (max-width: 1100px) { .hm-based { letter-spacing: .3em; } .hm-based span:last-child { margin-right: -.3em; } }
+  @media (max-width: 720px) {
+    .hm-stage { grid-template-columns: 1fr; margin-top: 20px; }
+    .hm-card { grid-column: 1; aspect-ratio: 1 / 1.05; }
+    .hm-photo { top: -8%; bottom: auto; width: 62%; }
+    .hm-list { font-size: 19px; }
+    .hm-based { grid-column: 1; grid-row: 2; margin: 22px 0 0; font-size: 12px; letter-spacing: .5em; }
+    .hm-based span:last-child { margin-right: -.5em; }
+    #panel .hm-intro { grid-row: 3; font-size: 12px; margin-top: 28px; }
+  }
+
+  
