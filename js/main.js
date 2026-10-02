@@ -2,27 +2,12 @@ import { lin, gam, toLab, fromLab, mix, lum, ratio, readable, css } from "./util
 import { paint, setTime, reduce, getT } from "./theme.js";
 import { scramble } from "./scramble.js";
 import { initLoader } from "./loader.js";
+import { PHOTO, PH_A, PH_B, GH, WK, WK_MAIN, WK_CS, SVC } from "./data.js";
 
 /* ---------- theme: palettes at four times of day, blended between them ---------- */
 /* ---------- nav: brackets open and the label scrambles into place on hover ---------- */
 /* ---------- content: clicking a nav item swaps the text below the name ---------- */
-const SVC = [
-  ["Frontend", ["React", "Next.js", "TypeScript", "UI systems"],
-    "Fast, accessible interfaces built with React and Next.js, typed end to end and organised into reusable systems.",
-    '<rect class="a" width="100" height="70"/><rect x="6" y="6" width="10" height="3"/><rect class="c" x="60" y="6" width="34" height="3"/><rect x="18" y="20" width="64" height="7"/><rect class="b" x="26" y="30" width="48" height="7"/><rect class="c" x="6" y="44" width="88" height="20"/>'],
-  ["Backend", ["Node.js", "REST APIs", "Databases", "Authentication"],
-    "APIs and data layers that stay predictable: clean REST design, solid databases and authentication done properly.",
-    '<rect class="a" width="100" height="70"/><rect x="8" y="10" width="30" height="4"/><rect class="b" x="14" y="20" width="50" height="4"/><rect x="14" y="30" width="38" height="4"/><rect class="c" x="14" y="40" width="58" height="4"/><rect x="8" y="50" width="20" height="4"/>'],
-  ["Mobile", ["React Native", "Expo", "State management"],
-    "Cross-platform apps with React Native and Expo, with state that stays manageable as the app grows.",
-    '<rect class="a" width="100" height="70"/><rect x="14" y="8" width="30" height="54" rx="4"/><rect class="b" x="18" y="14" width="22" height="12" rx="2"/><rect class="w" x="18" y="30" width="22" height="4"/><rect x="54" y="14" width="30" height="54" rx="4"/><rect class="w" x="58" y="20" width="22" height="4"/>'],
-  ["Product", ["Architecture", "UX", "Prototyping", "Deployment"],
-    "From architecture to prototype to deployment: thinking in whole products, not just screens.",
-    '<rect class="a" width="100" height="70"/><rect x="8" y="10" width="24" height="16"/><rect class="b" x="38" y="10" width="24" height="16"/><rect x="68" y="10" width="24" height="16"/><rect class="c" x="8" y="40" width="24" height="20"/><rect class="c" x="38" y="40" width="54" height="20"/>'],
-  ["Automation", ["Scripting", "AI-assisted workflows", "CI/CD", "Integrations"],
-    "Scripts and workflows that remove repetitive work, with AI-assisted tooling where it actually saves time.",
-    '<rect class="a" width="100" height="70"/><circle cx="20" cy="35" r="9"/><rect class="c" x="29" y="33" width="14" height="4"/><circle class="b" cx="52" cy="35" r="9"/><rect class="c" x="61" y="33" width="10" height="4"/><rect x="72" y="24" width="20" height="22"/>']
-];
+
 const svcHTML = () => `<section class="sv">
   <div class="sv-top"><h2>Services</h2><span>DEV/5</span></div>
   <div class="acc">${SVC.map(([t, l, d, sh], i) => `
@@ -34,9 +19,7 @@ const svcHTML = () => `<section class="sv">
         <p>${d}</p></div>
     </div>`).join("")}
   </div></section>`;
-const PHOTO = "assets/img/portrait.jpg";
-const PH_A  = "assets/img/ph-a.jpg";
-const PH_B  = "assets/img/ph-b.jpg";
+
 const HOME = `<section class="hm">
   <h1 class="hm-h"><span>Software</span> <span>Engineer</span></h1>
   <div class="hm-stage">
@@ -48,28 +31,10 @@ const HOME = `<section class="hm">
     <p class="hm-intro">I'm a software engineer and CSE student, who builds fast, clean web experiences and is learning security</p>
   </div>
 </section>`;
-const GH = "https://github.com/UnrealZahid101894/";
-const WK = [
-  { t: "Main Portfolio", tag: ["HTML"], sub: "Over-engineered, never finished", repo: "Main-portfolio", live: "",
-    d: "My first portfolio. Over-engineered, permanently incomplete, and live in a sense. Contributions and suggestions are welcome.",
-    sh: '<rect class="a" width="100" height="70"/><rect x="6" y="6" width="10" height="3"/><rect class="c" x="60" y="6" width="34" height="3"/><rect x="8" y="24" width="52" height="9"/><rect x="8" y="36" width="38" height="9"/><circle class="b" cx="76" cy="40" r="14"/>' },
-  { t: "Linux Terminal Commands", tag: ["Reference", "Linux"], sub: "A command reference that explains itself", repo: "Linux_Terminal_Commands", live: "", term: true,
-    d: "Terminal commands from basic navigation to system administration, with clear explanations, real-world examples and organized tables. Written for beginners.",
-    sh: '<rect class="a" width="100" height="70"/><rect x="8" y="10" width="6" height="3"/><rect class="c" x="18" y="10" width="34" height="3"/><rect x="8" y="20" width="6" height="3"/><rect class="c" x="18" y="20" width="52" height="3"/><rect class="c" x="18" y="30" width="44" height="3"/><rect x="8" y="42" width="6" height="3"/><rect class="b" x="18" y="41" width="5" height="6"/>' },
-  { t: "Setanel", tag: ["HTML"], sub: "Built for a friend's startup", repo: "setanel", live: "",
-    d: "A fun project made for a friend who wanted to build a startup together.",
-    sh: '<rect class="a" width="100" height="70"/><rect class="c" x="14" y="48" width="14" height="14"/><rect class="c" x="34" y="38" width="14" height="24"/><rect x="54" y="26" width="14" height="36"/><rect class="b" x="74" y="12" width="14" height="50"/>' },
-  { t: "Rendrx", tag: ["HTML", "Landing page"], sub: "A creative studio landing page", repo: "Agency_website", live: "",
-    d: "Showcase landing page for a creative studio offering three core services: video production, motion graphics and web development.",
-    sh: '<rect class="a" width="100" height="70"/><rect x="8" y="14" width="26" height="42"/><path class="w" d="M17 28 L27 35 L17 42Z"/><rect class="c" x="37" y="14" width="26" height="42"/><circle class="b" cx="50" cy="35" r="8"/><rect x="66" y="14" width="26" height="42"/><rect class="w" x="70" y="20" width="18" height="3"/><rect class="w" x="70" y="27" width="12" height="3"/>' }
-];
-const WK_MAIN = WK.slice(0, 4);
-const WK_CS = {
-  "Main-portfolio": { brief: "My first portfolio, written as a single file: no framework, no build step, no bundler. Over-engineered on purpose and never quite finished.", hi: ["A Three.js wireframe globe with a Dhaka marker and mouse-tracked rotation. Every material is pushed into one array at creation, so the whole globe recolors in a single pass with no geometry rebuild.", "The splash measures the ZAHID title before drawing it, and force-loads the font first so the first frame never lays out in a fallback face.", "The terminals type raw text first, then swap in syntax-highlighted HTML once a line finishes, so highlighting never breaks the typing animation.", "The cursor moves with transform instead of top/left, which keeps it on the compositor thread."], stack: ["HTML", "CSS", "JavaScript", "Three.js r128", "Google Fonts", "Vercel"] },
-  "Linux_Terminal_Commands": { brief: "A command reference for people starting out with Linux, built so each command comes with an explanation and an example instead of a bare list.", hi: ["Covers basic navigation through system administration, organised into tables you can scan.", "Includes a quick-reference of the most used commands and an OS comparison at a glance.", "The full reference is written for Zorin OS / Ubuntu (APT-based): system info, package management, files and directories, and more."], stack: ["Markdown", "Bash", "APT (Ubuntu / Zorin)", "GitHub"] },
-  "setanel": { brief: "Built for a friend's startup: an anti-piracy video security SDK that protects EdTech course videos from account sharing, screen recording and piracy.", hi: ["A drop-in SDK: it needs no changes to an existing login system or design.", "Configured through a single init call with a device limit and a revoke callback, plus a destroy call for logout.", "Device and session state is kept in Supabase. Also published as the npm package setanel-sdk."], stack: ["HTML", "JavaScript", "Supabase", "npm", "Vercel"] },
-  "Agency_website": { brief: "A showcase landing page for a creative studio offering video production, motion graphics and web development.", hi: ["Dark and light themes from one CSS variable system, with a flash overlay so the switch never jars.", "Live canvas visuals per service: a hero particle field, a simulated video editing timeline, a motion preview and a starfield.", "A Tetris canvas loader, a filterable project grid, animated counters and scroll reveals via IntersectionObserver."], stack: ["HTML", "CSS", "JavaScript", "Canvas", "IntersectionObserver", "Supabase", "Vercel"] }
-};
+
+
+
+
 const wkModal = p => {
   const src = `<a class="wk-ic gh" href="${GH}${p.repo}" target="_blank" rel="noopener" aria-label="Source on GitHub" title="Source"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23a11.5 11.5 0 0 1 3.003-.404c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222 0 1.606-.015 2.896-.015 3.286 0 .321.216.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>`, x = `<button class="wk-ic x" type="button" data-x aria-label="Close" title="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H4"/><path d="m10 6-6 6 6 6"/></svg></button>`, c = WK_CS[p.repo];
   const aside = `<aside class="wk-cs" aria-label="About"><div class="sb">${p.sub}</div><p>${c.brief}</p><div class="wk-chips">${c.stack.map(t => `<span>${t}</span>`).join("")}</div></aside>`;
