@@ -1,32 +1,10 @@
-// Start every load at the top (browsers default to restoring position)
-if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-window.scrollTo(0, 0);
-
 import { lin, gam, toLab, fromLab, mix, lum, ratio, readable, css } from "./utils/color.js";
 import { paint, setTime, reduce, getT } from "./theme.js";
+import { scramble } from "./scramble.js";
 import { initLoader } from "./loader.js";
 
 /* ---------- theme: palettes at four times of day, blended between them ---------- */
 /* ---------- nav: brackets open and the label scrambles into place on hover ---------- */
-const GLYPHS = "!<>-_/[]{}=+*^?#0123456789";
-function scramble(el) {
-  const text = el.dataset.text;
-  cancelAnimationFrame(el._raf);
-  if (reduce) { el.textContent = text; return; }
-  const t0 = performance.now();
-  const settle = [...text].map((_, i) => 140 + i * 60 + Math.random() * 120);   // when each letter locks in
-  const end = Math.max(...settle);
-  (function frame(now) {
-    const t = now - t0, slot = Math.floor(t / 55);        // glyphs change ~18 times a second: lively, not flickery
-    let out = "";
-    for (let i = 0; i < text.length; i++) {
-      out += t >= settle[i] ? text[i] : GLYPHS[(Math.imul(slot * 31 + i * 17 + 7, 2654435761) >>> 0) % GLYPHS.length];
-    }
-    el.textContent = out;
-    if (t < end) el._raf = requestAnimationFrame(frame); else el.textContent = text;
-  })(t0);
-}
-
 /* ---------- content: clicking a nav item swaps the text below the name ---------- */
 const SVC = [
   ["Frontend", ["React", "Next.js", "TypeScript", "UI systems"],

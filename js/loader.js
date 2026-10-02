@@ -14,7 +14,7 @@ export function initLoader() {
   const exit = () => {
     tint(home());   // whatever the lap managed (background tab, slow frame), leave on the exact palette the page rests on
     ld.classList.add("out");   // the home heading waits for this class before it drops in
-    const done = () => { ld.remove(); root.style.overflow = ""; };
+    const done = () => { ld.remove(); window.scrollTo(0, 0); root.style.overflow = ""; document.documentElement.classList.remove("sl");  document.body.style.visibility = ""; };
     const hd = document.getElementById("dial");
     if (still || !hd) { ld.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 150, easing: "linear", fill: "forwards" }).onfinish = done; return; }
     const a = dial.getBoundingClientRect(), b = hd.getBoundingClientRect(),

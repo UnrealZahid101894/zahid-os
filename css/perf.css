@@ -1,0 +1,20 @@
+/* css/perf.css
+   Scroll performance: isolate each section's layout & paint so the
+   browser doesn't recalculate the whole document during scroll.
+*/
+
+.pg {
+  contain: layout style paint;
+}
+
+/* Landing offset: sections arrive just below the fixed header */
+#s-home, #s-about, #s-works, #s-services, #s-connect {
+  scroll-margin-top: var(--hh, 104px);
+}
+
+/* Smooth scrolling for user-triggered nav and anchor clicks.
+   The reload lock (html.sl) blocks scrolling entirely until the loader exits,
+   so this can't fire during page load. */
+html:not(.sl) {
+  scroll-behavior: smooth;
+}

@@ -18,6 +18,17 @@
 <link rel="stylesheet" href="css/loader.css">
 <link rel="stylesheet" href="css/cursor.css">
 <link rel="stylesheet" href="css/rail.css">
+<link rel="stylesheet" href="css/perf.css">
+<style>
+  html.sl, html.sl body { overflow: hidden !important; }
+  html.sl > body > header,
+  html.sl > body > main { visibility: hidden !important; }
+</style>
+<script>
+// Runs before the browser restores scroll position. Must be classic (not module).
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+document.documentElement.classList.add("sl");
+</script>
 </head>
 <body>
 <div id="ld" role="status" aria-live="polite" aria-label="Loading"><div class="ld-bg"></div><div class="ld-dial"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="ld-ring" cx="50" cy="50" r="42"/></svg><div class="ld-orbit"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="ld-knob" cx="50" cy="21" r="5.85"/></svg></div></div><div class="ld-s" aria-hidden="true"><span class="ld-a">Initializing system<span class="ld-dots"><i></i><i></i><i></i></span></span><span class="ld-b">System ready<i class="ld-ok"></i></span></div><span class="ld-sr">Loading zahid.os</span></div>
