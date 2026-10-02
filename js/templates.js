@@ -5,9 +5,9 @@
 import { PHOTO, PH_A, PH_B, GH, WK, WK_MAIN, WK_CS, SVC } from "./data.js";
 
 export const svcHTML = () => `<section class="sv">
-  <div class="sv-top"><h2>Services</h2><span>DEV/5</span></div>
+  <div class="sv-top"><h2>Stack</h2><span>DEV/5</span></div>
   <div class="acc">${SVC.map(([t, l, d, sh], i) => `
-    <div class="col" tabindex="0" role="button" aria-label="${t.replace("|", " ")}" style="--i:${i}">
+    <div class="col" role="button" aria-label="${t.replace("|", " ")}" style="--i:${i}">
       <b class="n">00-${i + 1}</b>
       <h3 class="t"><i>//</i>${t.replace("|", "<br>")}</h3>
       <div class="ex"><div class="ex-b"><ul>${l.map((x, k) => `<li><span style="--k:${k}">/ ${x}</span></li>`).join("")}</ul>
@@ -28,12 +28,12 @@ export const HOME = `<section class="hm">
   </div>
 </section>`;
 
-export const wkModal = p => {
+export const wkModal = (p, wkLiveData) => {
   const src = `<a class="wk-ic gh" href="${GH}${p.repo}" target="_blank" rel="noopener" aria-label="Source on GitHub" title="Source"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23a11.5 11.5 0 0 1 3.003-.404c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222 0 1.606-.015 2.896-.015 3.286 0 .321.216.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>`, x = `<button class="wk-ic x" type="button" data-x aria-label="Close" title="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H4"/><path d="m10 6-6 6 6 6"/></svg></button>`, c = WK_CS[p.repo];
   const aside = `<aside class="wk-cs" aria-label="About"><div class="sb">${p.sub}</div><p>${c.brief}</p><div class="wk-chips">${c.stack.map(t => `<span>${t}</span>`).join("")}</div></aside>`;
   if (p.term) return `<div class="wk-md-in"><div class="wk-lv-bar"><h2 id="wk-t">${p.t}</h2><span class="wk-url">~/terminal</span>${src}${x}</div><div class="wk-split"><div class="wk-main"><div class="wk-tm" role="application" aria-label="Terminal"><div class="wk-tm-out" aria-live="polite"></div><label class="wk-tm-in"><span>zahid@os:~$</span><input type="text" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="Type a command, try help"></label></div></div>${aside}</div></div>`;
-  const L = wkLive()[p.repo];
-  return `<div class="wk-md-in"><div class="wk-lv-bar"><h2 id="wk-t">${p.t}</h2><span class="wk-url">${L.url}</span>${src}${x}</div><div class="wk-split"><div class="wk-main">${L.pages.length > 1 ? `<div class="wk-lv-tabs">${L.pages.map((g, k) => `<button type="button" data-pg="${k}"${k ? "" : ' class="on"'}>${g.name}</button>`).join("")}</div>` : ""}<iframe class="wk-frame" title="${p.t} live view" sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox allow-forms"></iframe></div>${aside}</div></div>`;
+  const L = wkLiveData[p.repo];
+  return `<div class="wk-md-in"><div class="wk-lv-bar"><h2 id="wk-t">${p.t}</h2><span class="wk-url">${L.url}</span>${src}${x}</div><div class="wk-split"><div class="wk-main">${L.pages.length > 1 ? `<div class="wk-lv-tabs">${L.pages.map((g, k) => `<button type="button" data-pg="${k}"${k ? "" : ' class="on"'}>${g.name}</button>`).join("")}</div>` : ""}<iframe class="wk-frame" title="${p.t} live view" sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms"></iframe></div>${aside}</div></div>`;
 };
 
 export const PANELS = {
@@ -59,12 +59,12 @@ export const PANELS = {
         <a class="big2" href="mailto:your-email@example.com">your-email@example.com</a>
       </div>
       <div class="soc">
-        <a class="ul" href="https://instagram.com/" target="_blank" rel="noopener">Instagram<span class="ar">↗</span></a>
+        <a class="ul" href="https://www.instagram.com/__lost.from_light.__/" target="_blank" rel="noopener">Instagram<span class="ar">↗</span></a>
         <a class="ul" href="https://t.me/" target="_blank" rel="noopener">Telegram<span class="ar">↗</span></a>
-        <a class="ul" href="https://facebook.com/" target="_blank" rel="noopener">Facebook<span class="ar">↗</span></a>
+        <a class="ul" href="https://www.facebook.com/Sunless.101894" target="_blank" rel="noopener">Facebook<span class="ar">↗</span></a>
       </div>
       <div class="row2">
-        <nav class="lk" aria-label="Site links"><a href="#about" data-go="about">About me</a><a href="#services" data-go="services">Services</a><a href="#works" data-go="works">Works</a></nav>
+        <nav class="lk" aria-label="Site links"><a href="#about" data-go="about">About me</a><a href="#services" data-go="services">Stack</a><a href="#works" data-go="works">Works</a></nav>
         <div class="addr">Address:<br>Dhaka, Bangladesh</div>
       </div>
       <div class="row3">

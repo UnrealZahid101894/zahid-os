@@ -33,19 +33,19 @@ export const WK_CS = {
 };
 
 export const SVC = [
-  ["Frontend", ["React", "Next.js", "TypeScript", "UI systems"],
-    "Fast, accessible interfaces built with React and Next.js, typed end to end and organised into reusable systems.",
-    '<rect class="a" width="100" height="70"/><rect x="6" y="6" width="10" height="3"/><rect class="c" x="60" y="6" width="34" height="3"/><rect x="18" y="20" width="64" height="7"/><rect class="b" x="26" y="30" width="48" height="7"/><rect class="c" x="6" y="44" width="88" height="20"/>'],
-  ["Backend", ["Node.js", "REST APIs", "Databases", "Authentication"],
-    "APIs and data layers that stay predictable: clean REST design, solid databases and authentication done properly.",
+  ["Languages", ["JavaScript", "Python", "C", "Java", "SQL"],
+    "Core languages I work with ? from scripting small tools to building full applications.",
+    '<rect class="a" width="100" height="70"/><rect x="8" y="10" width="6" height="3"/><rect class="c" x="18" y="10" width="46" height="3"/><rect class="c" x="8" y="18" width="6" height="3"/><rect class="c" x="18" y="18" width="34" height="3"/><rect class="b" x="8" y="28" width="6" height="3"/><rect x="18" y="28" width="52" height="3"/><rect class="c" x="8" y="38" width="6" height="3"/><rect x="18" y="38" width="40" height="3"/>'],
+  ["Frontend", ["React", "Next.js", "HTML / CSS", "Tailwind"],
+    "Building interfaces that feel fast, stay accessible, and hold together from 320px to 4K.",
+    '<rect class="a" width="100" height="70"/><rect x="6" y="6" width="10" height="3"/><rect class="c" x="60" y="6" width="34" height="3"/><rect x="8" y="20" width="52" height="9"/><rect class="b" x="8" y="32" width="38" height="9"/><rect class="c" x="8" y="46" width="84" height="18"/>'],
+  ["Backend", ["Node.js", "Express", "Supabase", "PostgreSQL"],
+    "APIs and data layers that stay predictable under real load ? clean REST, honest schemas, secure auth.",
     '<rect class="a" width="100" height="70"/><rect x="8" y="10" width="30" height="4"/><rect class="b" x="14" y="20" width="50" height="4"/><rect x="14" y="30" width="38" height="4"/><rect class="c" x="14" y="40" width="58" height="4"/><rect x="8" y="50" width="20" height="4"/>'],
-  ["Mobile", ["React Native", "Expo", "State management"],
-    "Cross-platform apps with React Native and Expo, with state that stays manageable as the app grows.",
-    '<rect class="a" width="100" height="70"/><rect x="14" y="8" width="30" height="54" rx="4"/><rect class="b" x="18" y="14" width="22" height="12" rx="2"/><rect class="w" x="18" y="30" width="22" height="4"/><rect x="54" y="14" width="30" height="54" rx="4"/><rect class="w" x="58" y="20" width="22" height="4"/>'],
-  ["Product", ["Architecture", "UX", "Prototyping", "Deployment"],
-    "From architecture to prototype to deployment: thinking in whole products, not just screens.",
-    '<rect class="a" width="100" height="70"/><rect x="8" y="10" width="24" height="16"/><rect class="b" x="38" y="10" width="24" height="16"/><rect x="68" y="10" width="24" height="16"/><rect class="c" x="8" y="40" width="24" height="20"/><rect class="c" x="38" y="40" width="54" height="20"/>'],
-  ["Automation", ["Scripting", "AI-assisted workflows", "CI/CD", "Integrations"],
-    "Scripts and workflows that remove repetitive work, with AI-assisted tooling where it actually saves time.",
-    '<rect class="a" width="100" height="70"/><circle cx="20" cy="35" r="9"/><rect class="c" x="29" y="33" width="14" height="4"/><circle class="b" cx="52" cy="35" r="9"/><rect class="c" x="61" y="33" width="10" height="4"/><rect x="72" y="24" width="20" height="22"/>']
+  ["Security", ["Linux", "Networking", "Web hardening", "Auth flows"],
+    "Focused on how systems break, how they get exploited, and how to actually defend them.",
+    '<rect class="a" width="100" height="70"/><path class="c" d="M50 12 L70 20 L70 38 Q70 52 50 58 Q30 52 30 38 L30 20 Z"/><rect class="b" x="45" y="32" width="10" height="8" rx="1"/><path class="w" d="M47 32 V29 a3 3 0 0 1 6 0 V32" fill="none" stroke="none"/>'],
+  ["Tools", ["Git", "VS Code", "Figma", "Postman"],
+    "Everyday workflow ? fast iteration, clean commits, and a design loop that stays close to the code.",
+    '<rect class="a" width="100" height="70"/><circle class="b" cx="24" cy="35" r="9"/><rect class="c" x="33" y="33" width="14" height="4"/><circle cx="52" cy="35" r="9"/><rect class="c" x="61" y="33" width="10" height="4"/><rect x="72" y="24" width="20" height="22"/>']
 ];

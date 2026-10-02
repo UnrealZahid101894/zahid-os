@@ -40,9 +40,13 @@ const fromHash = () => { const h = location.hash.slice(1); return SECS.some(([k]
 addEventListener("hashchange", () => go(fromHash()));
 navs.forEach(btn => {
   const label = btn.querySelector(".t");
-  btn.addEventListener("mouseenter", () => scramble(label));
-  btn.addEventListener("focus", () => { if (btn.matches(":focus-visible")) scramble(label); });
-  btn.addEventListener("click", () => { go(btn.dataset.run); if (matchMedia("(hover: none)").matches) scramble(label); });
+  if (label) btn.addEventListener("mouseenter", () => scramble(label));
+  btn.addEventListener("focus", () => { if (btn.matches(":focus-visible") && label) scramble(label); });
+  btn.addEventListener("click", () => {
+    if (btn.dataset.run === "home") go(null);
+    else go(btn.dataset.run);
+    if (matchMedia("(hover: none)").matches && label) scramble(label);
+  });
 });
 document.getElementById("home").addEventListener("click", () => go(null));
 
@@ -61,7 +65,12 @@ function onScrollAll() {
   if (ab) { const r = ab.getBoundingClientRect(), m = hdr.offsetHeight * .5; hdr.classList.toggle("inv", r.top <= m && r.bottom >= m); }
   pend = pend.filter(el => { if (reduce || el.getBoundingClientRect().top < vh * .9) { el.classList.add("in"); return false; } return true; });
   let cur = null; for (const [k] of SECS) if (sec(k).getBoundingClientRect().top <= vh * .4) cur = k;
-  navs.forEach(b => b.setAttribute("aria-current", String(b.dataset.run === cur && cur !== "home")));
+  const atTop = y < 40;
+  navs.forEach(b => {
+    const isHome = b.dataset.run === "home";
+    const active = atTop ? isHome : (b.dataset.run === cur);
+    b.setAttribute("aria-current", String(active));
+  });
 }
 const reqAll = () => { if (!tk2) { tk2 = true; requestAnimationFrame(onScrollAll); } };
 addEventListener("scroll", reqAll, { passive: true }); addEventListener("resize", () => { hh(); reqAll(); });

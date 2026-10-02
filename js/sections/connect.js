@@ -19,8 +19,15 @@ export function initConnect() {
   const cmeas = () => { LT.forEach(o => { o.L.forEach(e => e.style.transform = ""); const rs = o.L.map(e => e.getBoundingClientRect()),
       c = (Math.min(...rs.map(r => r.left)) + Math.max(...rs.map(r => r.right))) / 2, xs = rs.map(r => Math.abs(r.left + r.width / 2 - c)), mx = Math.max(...xs) || 1;
     o.d = xs.map(x => x / mx); o.s = rs.map(r => r.left + r.width / 2 < c ? -1 : 1); }); cdraw(); };   // centre letters first, the sides follow (as on About)
-  const fit = () => { g.style.fontSize = "100px"; const w = g.getBoundingClientRect().width;
-    g.style.fontSize = Math.min(100 * g.parentElement.clientWidth / w, innerHeight * .55) + "px"; };
+  const fit = () => {
+    g.style.fontSize = "100px";
+    const w = g.getBoundingClientRect().width;
+    // Use the parent's clientWidth as the available space.
+    // Multiply by .96 for a small safety margin so the right edge never clips.
+    const avail = g.parentElement.clientWidth * .96;
+    const size = Math.min(100 * avail / w, innerHeight * .55);
+    g.style.fontSize = size + "px";
+  };
   const tick = () => { ticking = false; const vh = innerHeight;
     LT.forEach(o => { const r = o.m.getBoundingClientRect(); o.tp = reduce ? 1 : Math.max(0, Math.min(1, (vh * .94 - (r.top + scrollY - sY())) / (vh * .6))); });
     if (!craf) craf = requestAnimationFrame(cstep); };

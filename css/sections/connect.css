@@ -59,4 +59,58 @@
     .hero { padding-top: 8vh; }
   }
 
-  
+
+/* mobile: flip row2 so nav is on the right, addr on the left */
+@media (max-width: 720px) {
+  .info .row2 {
+    flex-direction: row-reverse;
+    align-items: flex-start;
+  }
+  .info .row2 .lk {
+    align-items: flex-end;
+    text-align: right;
+  }
+  .info .row2 .addr {
+    text-align: left;
+  }
+}
+
+
+/* mobile: hide footer nav links (bottom bar has them) */
+@media (max-width: 720px) {
+  .info .lk {
+    display: none !important;
+  }
+}
+
+
+/* mobile: constrain giant ZAHID.OS text */
+@media (max-width: 720px) {
+  .gmask {
+    margin-top: 16px !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+  .giant {
+    /* Size is set by JS fit() ? leave font-size alone */
+    line-height: 1 !important;
+    letter-spacing: -.035em !important;
+    white-space: nowrap !important;
+    display: inline-block !important;
+    text-align: left !important;
+    padding-bottom: .08em !important;
+  }
+  /* Fix the mask + inner blocks the letters sit in */
+  .gmask .mi {
+    font-size: 0 !important;
+    line-height: 0 !important;
+    padding: 0 !important;
+    display: block !important;
+  }
+  /* Letter spans: keep inline, no block-level stacking */
+  .giant .cw,
+  .giant .cl {
+    display: inline !important;
+    white-space: pre !important;
+  }
+}

@@ -44,7 +44,7 @@ export function initWorks() {
   const open = async (i, from) => {
     const p = WK[i]; opener = from || null; md.className = "wk-md " + (p.term ? "term" : "live");
     if (!p.term) await loadWkLive();
-    md.innerHTML = wkModal(p); md.scrollTop = 0;
+    md.innerHTML = wkModal(p, _wkL); md.scrollTop = 0;
     const fr = md.querySelector(".wk-frame");
     if (fr) { const pg = wkLive()[p.repo].pages; fr.srcdoc = pg[0].html; md.querySelectorAll("[data-pg]").forEach(b => b.addEventListener("click", () => { md.querySelectorAll("[data-pg]").forEach(z => z.classList.toggle("on", z === b)); fr.srcdoc = pg[+b.dataset.pg].html; })); }
     md.classList.add("open"); md.setAttribute("aria-hidden", "false"); document.documentElement.style.overflow = "hidden"; document.documentElement.classList.add("wk-open");

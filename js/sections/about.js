@@ -155,7 +155,6 @@ export function initAbout() {
   if (document.fonts) document.fonts.ready.then(measure);
   return () => { cancelAnimationFrame(raf); removeEventListener("resize", measure); removeEventListener("scroll", onScroll); };
 }
-panel.addEventListener("click", e => { const a = e.target.closest("[data-go]"); if (a) { e.preventDefault(); go(a.dataset.go); } });
 
 /* about, part 2: the curtain. s = how far the scene has scrolled. Curtain falls over the block from 130vh to 200vh, then every line of text on it
    rises out of its own mask in turn (200vh to 345vh). Lines are measured from the real layout, so they re-split on resize and when fonts load. */
