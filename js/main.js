@@ -1,3 +1,5 @@
+import { lin, gam, toLab, fromLab, mix, lum, ratio, readable, css } from "./utils/color.js";
+
 /* ---------- theme: palettes at four times of day, blended between them ---------- */
 const K = [
   { t: 0,    bg: [0,0,0],       fg: [238,233,224], ac: [201,169,110] }, // black + ivory + champagne gold
@@ -11,27 +13,7 @@ const K = [
   { t: 22,   bg: [10,16,38],    fg: [226,228,238], ac: [170,180,220] }, // midnight navy + silver blue
 ];
 
-/* Blend in OKLab (perceptual space) so dark-to-light shifts look even instead of muddy grey. */
-const lin = v => (v /= 255) <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4;
-const gam = v => 255 * (v <= .0031308 ? 12.92 * v : 1.055 * v ** (1 / 2.4) - .055);
-const toLab = ([r, g, b]) => {
-  r = lin(r); g = lin(g); b = lin(b);
-  const l = Math.cbrt(.4122214708 * r + .5363325363 * g + .0514459929 * b),
-        m = Math.cbrt(.2119034982 * r + .6806995451 * g + .1073969566 * b),
-        s = Math.cbrt(.0883024619 * r + .2817188376 * g + .6299787005 * b);
-  return [.2104542553 * l + .793617785 * m - .0040720468 * s,
-          1.9779984951 * l - 2.428592205 * m + .4505937099 * s,
-          .0259040371 * l + .7827717662 * m - .808675766 * s];
-};
-const fromLab = ([L, a, b]) => {
-  const l = (L + .3963377774 * a + .2158037573 * b) ** 3,
-        m = (L - .1055613458 * a - .0638541728 * b) ** 3,
-        s = (L - .0894841775 * a - 1.291485548 * b) ** 3;
-  return [4.0767416621 * l - 3.3077115913 * m + .2309699292 * s,
-          -1.2684380046 * l + 2.6097574011 * m - .3413193965 * s,
-          -.0041960863 * l - .7034186147 * m + 1.707614701 * s]
-    .map(v => Math.round(gam(Math.min(1, Math.max(0, v)))));
-};
+
 K.forEach(k => { k.lbg = toLab(k.bg); k.lfg = toLab(k.fg); k.lac = toLab(k.ac); });
 
 /* Smooth curve through the palettes (Catmull-Rom, looping): no corners, no stops at the palettes. */
@@ -45,17 +27,7 @@ function curve(key, i, u) {
     + (3 * p1[c] - p0[c] - 3 * p2[c] + p3[c]) * u * u * u));
 }
 
-const mix = (a, b, k) => a.map((v, i) => Math.round(v + (b[i] - v) * k));
-const lum = c => { const f = v => (v /= 255) <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4;
-  return .2126 * f(c[0]) + .7152 * f(c[1]) + .0722 * f(c[2]); };
-const ratio = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + .05) / (Math.min(x, y) + .05); };
-// Somewhere between dark and light, text has to swap sides. This keeps it readable there.
-const readable = (c, bg, min) => {
-  if (ratio(c, bg) >= min) return c;
-  const w = [245,245,240], k = [12,12,12];
-  return ratio(w, bg) > ratio(k, bg) ? w : k;
-};
-const css = c => `rgb(${c})`;
+
 
 /* Every color glides toward its target, so even a fast drag changes the theme gently. */
 const shown = {}, tgt = {}; let easing = false, last = 0;
@@ -733,4 +705,53 @@ onScrollAll();
   addEventListener("pointerup", () => cx.classList.remove("dn"));
   root.addEventListener("mouseleave", () => cx.classList.remove("on"));
   root.addEventListener("mouseenter", () => { if (root.classList.contains("cc")) cx.classList.add("on"); });
+})();
+
+// ?????????????????????????????????????????????????????????????
+// Loader: boot sequence. Runs here (not as a separate <script>)
+// so it has access to paint() and T via closure.
+// ?????????????????????????????????????????????????????????????
+(() => {
+  const ld = document.getElementById("ld"); if (!ld) return;
+  const root = document.documentElement, still = matchMedia("(prefers-reduced-motion: reduce)").matches,
+        dial = ld.querySelector(".ld-dial"), orbit = ld.querySelector(".ld-orbit"), bg = ld.querySelector(".ld-bg"), st = ld.querySelector(".ld-s"), sr = ld.querySelector(".ld-sr");
+  let spun = still, ready = false, going = false;
+  root.style.overflow = "hidden";
+  const exit = () => {
+    tint(home());   // whatever the lap managed (background tab, slow frame), leave on the exact palette the page rests on
+    ld.classList.add("out");   // the home heading waits for this class before it drops in
+    const done = () => { ld.remove(); root.style.overflow = ""; };
+    const hd = document.getElementById("dial");
+    if (still || !hd) { ld.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 150, easing: "linear", fill: "forwards" }).onfinish = done; return; }
+    const a = dial.getBoundingClientRect(), b = hd.getBoundingClientRect(),
+          to = `translate3d(${b.left + b.width / 2 - a.left - a.width / 2}px,${b.top + b.height / 2 - a.top - a.height / 2}px,0) scale(${b.width / a.width})`;
+    st.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 110, easing: "linear", fill: "forwards" });
+    bg.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, delay: 60, easing: "linear", fill: "forwards" });
+    dial.animate([{ transform: "translate3d(0,0,0) scale(1)", opacity: 1 }, { opacity: 1, offset: .7 }, { transform: to, opacity: 0 }], { duration: 270, easing: "cubic-bezier(.7,0,.2,1)", fill: "both" }).onfinish = done;   // settles into the header dial
+  };
+  const settle = () => {
+    if (going || !spun || !ready) return; going = true;
+    ld.classList.add("rdy"); sr.textContent = "System ready";
+    setTimeout(exit, still ? 280 : 110);
+  };
+  const A = still || !orbit.getAnimations ? null : orbit.getAnimations()[0];   // the CSS sweep as a Web Animation: read-only here
+  const sweepMs = A && A.effect ? A.effect.getComputedTiming().endTime : 1400;
+  if (still) ld.classList.add("rdy");   // reduced motion: no sweep, no colour lap, straight to the ready state
+  else { orbit.addEventListener("animationend", () => { spun = true; settle(); }, { once: true }); setTimeout(() => { spun = true; settle(); }, sweepMs + 900); }
+  /* Colours. The sweep is one lap of the 24h theme dial (11:00 -> 11:00, clockwise = forward in time), so the knob and the palette move together:
+     off-white -> white -> stone -> sage -> emerald -> navy -> black -> bordeaux -> clay -> champagne -> off-white. paint(t), K and ease() are the
+     page's own (theme script below): no second palette, no second blend. The page underneath reads the same --bg/--fg/--ac/--dim, so when the
+     loader lifts there is nothing to match. progress is the eased value, so the colours follow the knob's pace exactly. */
+  const home = () => (typeof T === "number" ? T : 11), born = performance.now();
+  const tint = t => { if (typeof paint === "function" && typeof T === "number") paint(t); };
+  const lap = now => {
+    const raw = A && A.effect ? A.effect.getComputedTiming().progress : (now - born) / sweepMs,
+          p = Math.min(1, Math.max(0, raw || 0));
+    tint((home() + 24 * p) % 24);   // p = 1 lands exactly on home(), the palette the page rests on
+    if (p < 1 && !going) requestAnimationFrame(lap);
+  };
+  if (!still) requestAnimationFrame(lap);
+  const fonts = Promise.race([Promise.all([document.fonts.load('800 80px "Barlow Condensed"'), document.fonts.load('400 14px "Spline Sans Mono"')]), new Promise(r => setTimeout(r, 1500))]).catch(() => {});
+  Promise.all([fonts, new Promise(r => document.readyState === "complete" ? r() : addEventListener("load", r, { once: true }))]).then(() => { ready = true; settle(); });
+  setTimeout(() => { ready = true; settle(); }, 4000);   // never trap anyone behind the loader
 })();
