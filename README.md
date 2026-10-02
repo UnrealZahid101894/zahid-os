@@ -1,5 +1,7 @@
 # zahid.os
 
+![zahid.os — home](./assets/screenshot.png)
+
 A personal portfolio built as a single-page "operating system."
 
 Time-of-day theme engine that interpolates between nine palettes in OKLab
