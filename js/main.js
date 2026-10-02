@@ -1,3 +1,12 @@
+// js/main.js
+// Entry point. Wires all modules together.
+//
+// Responsibilities:
+//   - Renders the section panels
+//   - Sets up navigation (buttons, hash, home logo)
+//   - Runs the scroll orchestration (reveal, header hide/show, nav highlight)
+//   - Kicks off every init function once at boot
+
 import { lin, gam, toLab, fromLab, mix, lum, ratio, readable, css } from "./utils/color.js";
 import { panel } from "./dom.js";
 import { sY, setScrollY } from "./utils/scroll.js";
@@ -14,16 +23,6 @@ import { initSel } from "./sections/works.js";
 import { initCursor } from "./cursor.js";
 import { initAbTitle, abPhys, initAbout, initCurtain } from "./sections/about.js";
 
-/* ---------- theme: palettes at four times of day, blended between them ---------- */
-/* ---------- nav: brackets open and the label scrambles into place on hover ---------- */
-/* ---------- content: clicking a nav item swaps the text below the name ---------- */
-
-
-
-
-
-
-let cleanup = null;
 /* home: the giant heading is fitted to the page width (one line on desktop, two fitted lines on phones) */
 const SECS = [["home", HOME], ["about", PANELS.about], ["works", selHTML()], ["services", PANELS.services], ["connect", PANELS.connect]];
 panel.setAttribute("aria-live", "off");
@@ -69,11 +68,19 @@ hdr.addEventListener("focusin", () => hdr.classList.remove("away"));
 addEventListener("pointermove", e => { if (e.clientY < 40) hdr.classList.remove("away"); }, { passive: true });
 
 setTime(11, false);
-hh(); initHomeDrop(panel); fitHome(panel); initServices(panel); initConnect(panel); initAbout(); initCurtain(); initAbTitle(); initSel(panel); initWorks();
-document.fonts.ready.then(() => { hh(); fitHome(panel); if (fromHash()) sec(fromHash()).scrollIntoView({ behavior: "auto", block: "start" }); onScrollAll(); });
-onScrollAll();
-
-/* ---------- crosshair cursor: positions are written straight to transforms inside one rAF, so it tracks the mouse with no lag ---------- */
-
+hh();
+initHomeDrop(panel);
+fitHome(panel);
+initServices(panel);
+initConnect(panel);
+initAbout();
+initCurtain();
+initAbTitle();
+initSel(panel);
+initWorks();
 initCursor();
 initLoader();
+initCursor();
+initLoader();
+document.fonts.ready.then(() => { hh(); fitHome(panel); if (fromHash()) sec(fromHash()).scrollIntoView({ behavior: "auto", block: "start" }); onScrollAll(); });
+onScrollAll();
