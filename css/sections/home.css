@@ -9,7 +9,7 @@
   .hm-h { position: relative; z-index: 2; margin: -.06em 0 0; width: max-content; font: 800 100px/.8 var(--c); letter-spacing: -.02em; word-spacing: -.04em; white-space: nowrap; pointer-events: none; }
   .hm-h.two { width: auto; }
   .hm-h .hl { display: inline-block; will-change: transform; }
-  .hm-h.two span { display: block; width: max-content; }
+  .hm-h.two > span { display: block; width: max-content; }
   .hm-stage { display: grid; grid-template-columns: 1fr 40% 1fr; margin-top: clamp(28px, 3.2vw, 60px); }
   .hm-card { grid-column: 2; grid-row: 1; position: relative; aspect-ratio: 711 / 427; }
   .hm-card::before { content: ""; position: absolute; inset: 0; background: var(--fg); opacity: .05; }
@@ -31,3 +31,232 @@
   }
 
   
+
+/* --- mobile: flattened home layout (v2, force overrides) --- */
+@media (max-width: 720px) {
+
+  /* Heading: kill all clipping, force safe size, no negative margin */
+  .hm-h {
+    margin: 4px 0 12px !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+    overflow: visible !important;
+    clip-path: none !important;
+    -webkit-clip-path: none !important;
+    height: auto !important;
+    width: 100% !important;
+    white-space: normal !important;
+    pointer-events: auto;
+  }
+  .hm-h > span {
+    display: block !important;
+    width: auto !important;
+    font-size: clamp(44px, 15.5vw, 88px) !important;
+    line-height: .95 !important;
+    letter-spacing: -.02em !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+  .hm-h .hl {
+    /* keep letter-level transforms for the drop-in animation,
+       but never clip the glyphs */
+    overflow: visible !important;
+  }
+
+  /* Stage */
+  .hm-stage {
+    display: block !important;
+    margin-top: 12px !important;
+    grid-template-columns: none !important;
+  }
+
+  /* Card: fully gone */
+  .hm-card {
+    display: block !important;
+    aspect-ratio: auto !important;
+    position: static !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: none !important;
+  }
+  .hm-card::before { display: none !important; }
+
+  /* Photo: full width, no offset, no overlay */
+  .hm-photo {
+    position: static !important;
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 4 / 5 !important;
+    max-height: 62vh !important;
+    object-fit: cover !important;
+    object-position: 50% 22% !important;
+    right: auto !important;
+    bottom: auto !important;
+    top: auto !important;
+    left: auto !important;
+    border-radius: 4px !important;
+    margin: 0 0 18px !important;
+  }
+
+  /* Service list */
+  .hm-list {
+    position: static !important;
+    left: auto !important;
+    bottom: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 17px !important;
+    line-height: 1.55 !important;
+    text-align: left !important;
+  }
+  .hm-list li { display: block; }
+
+  /* Based-in */
+  .hm-based {
+    grid-column: auto !important;
+    grid-row: auto !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: baseline !important;
+    margin: 22px 0 0 !important;
+    font-size: 11px !important;
+    letter-spacing: .28em !important;
+    width: 100% !important;
+    text-align: left !important;
+  }
+  .hm-based span:last-child { margin-right: -.28em !important; }
+
+  /* Intro */
+  #panel .hm-intro {
+    grid-column: auto !important;
+    margin: 26px 0 0 !important;
+    padding: 0 4px !important;
+    max-width: 100% !important;
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+    text-align: center !important;
+    justify-self: auto !important;
+  }
+}
+
+
+/* --- mobile: flattened home layout (v2, force overrides) --- */
+@media (max-width: 720px) {
+
+  /* Heading: kill all clipping, force safe size, no negative margin */
+  .hm-h {
+    margin: 4px 0 12px !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+    overflow: visible !important;
+    clip-path: none !important;
+    -webkit-clip-path: none !important;
+    height: auto !important;
+    width: 100% !important;
+    white-space: normal !important;
+    pointer-events: auto;
+  }
+  .hm-h > span {
+    display: block !important;
+    width: auto !important;
+    font-size: clamp(44px, 15.5vw, 88px) !important;
+    line-height: .95 !important;
+    letter-spacing: -.02em !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+  .hm-h .hl {
+    /* keep letter-level transforms for the drop-in animation,
+       but never clip the glyphs */
+    overflow: visible !important;
+  }
+
+  /* Stage */
+  .hm-stage {
+    display: block !important;
+    margin-top: 12px !important;
+    grid-template-columns: none !important;
+  }
+
+  /* Card: fully gone */
+  .hm-card {
+    display: block !important;
+    aspect-ratio: auto !important;
+    position: static !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: none !important;
+  }
+  .hm-card::before { display: none !important; }
+
+  /* Photo: full width, no offset, no overlay */
+  .hm-photo {
+    position: static !important;
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 4 / 5 !important;
+    max-height: 62vh !important;
+    object-fit: cover !important;
+    object-position: 50% 22% !important;
+    right: auto !important;
+    bottom: auto !important;
+    top: auto !important;
+    left: auto !important;
+    border-radius: 4px !important;
+    margin: 0 0 18px !important;
+  }
+
+  /* Service list */
+  .hm-list {
+    position: static !important;
+    left: auto !important;
+    bottom: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 17px !important;
+    line-height: 1.55 !important;
+    text-align: left !important;
+  }
+  .hm-list li { display: block; }
+
+  /* Based-in */
+  .hm-based {
+    grid-column: auto !important;
+    grid-row: auto !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: baseline !important;
+    margin: 22px 0 0 !important;
+    font-size: 11px !important;
+    letter-spacing: .28em !important;
+    width: 100% !important;
+    text-align: left !important;
+  }
+  .hm-based span:last-child { margin-right: -.28em !important; }
+
+  /* Intro */
+  #panel .hm-intro {
+    grid-column: auto !important;
+    margin: 26px 0 0 !important;
+    padding: 0 4px !important;
+    max-width: 100% !important;
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+    text-align: center !important;
+    justify-self: auto !important;
+  }
+}
+
+
+/* --- definitive: letter spans must stay inline --- */
+@media (max-width: 720px) {
+  .hm-h.two > span > .hl,
+  .hm-h > span > .hl {
+    display: inline-block !important;
+    width: auto !important;
+    height: auto !important;
+    vertical-align: baseline !important;
+  }
+}

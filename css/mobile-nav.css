@@ -1,0 +1,119 @@
+/* css/mobile-nav.css
+   Mobile-only: bigger dial top-right, nav becomes a fixed bottom icon bar.
+   Desktop keeps the bracket-text nav in the header. */
+
+.nav-ic { display: none; }
+
+@media (max-width: 720px) {
+
+  /* --- Header: logo left, big dial right, single row --- */
+  header,
+  body.one header {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 12px;
+    padding-top: calc(14px + env(safe-area-inset-top, 0px));
+    padding-bottom: 12px;
+  }
+  .logo { margin-right: auto; }
+  #dial,
+  header #dial {
+    width: 108px;
+    height: 108px;
+    flex: none;
+    margin-right: -4px;
+  }
+
+  /* Header hides by fading (a transform on the header would break
+     position: fixed on the nav that now lives outside it). */
+  body.one header {
+    transition: opacity .35s ease, visibility .35s ease;
+  }
+  body.one header.away {
+    transform: none !important;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  /* --- Nav: fixed bottom bar, icons only --- */
+  nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: auto;
+    z-index: 200;
+    display: flex;
+    justify-content: space-around;
+    align-items: stretch;
+    gap: 0;
+    margin: 0;
+    padding: 6px 0 calc(8px + env(safe-area-inset-bottom, 0px));
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid color-mix(in srgb, var(--fg) 8%, transparent);
+  }
+
+  .nav {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 8px 4px;
+    background: none;
+    border: 0;
+    font-size: 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--dim);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Hide the desktop bracket + text */
+  .nav .t,
+  .nav .l,
+  .nav .r { display: none; }
+
+  .nav-ic {
+    display: block;
+    width: 24px;
+    height: 24px;
+    color: inherit;
+    opacity: .55;
+    transition: opacity .25s ease, color .25s ease, transform .35s cubic-bezier(.16,1,.3,1);
+  }
+  .nav[aria-current="true"] .nav-ic,
+  .nav:focus-visible .nav-ic {
+    color: var(--fg);
+    opacity: 1;
+  }
+  .nav[aria-current="true"] .nav-ic {
+    transform: translateY(-1px);
+  }
+
+  /* Active indicator */
+  .nav[aria-current="true"]::after {
+    content: "";
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--ac);
+  }
+
+  /* Room for the fixed nav so it doesn't cover content */
+  body.one main,
+  #s-home,
+  #s-about,
+  #s-works,
+  #s-services,
+  #s-connect {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+  }
+}

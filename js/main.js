@@ -21,6 +21,7 @@ import { initServices } from "./sections/services.js";
 import { initConnect } from "./sections/connect.js";
 import { initSel } from "./sections/works.js";
 import { initCursor } from "./cursor.js";
+import { initMobileNav } from "./mobile-nav.js";
 import { initAbTitle, abPhys, initAbout, initCurtain } from "./sections/about.js";
 
 /* home: the giant heading is fitted to the page width (one line on desktop, two fitted lines on phones) */
@@ -79,6 +80,7 @@ initAbTitle();
 initSel(panel);
 initWorks();
 initCursor();
+initMobileNav();
 initLoader();
 initCursor();
 initLoader();
