@@ -1,3 +1,7 @@
+// Start every load at the top (browsers default to restoring position)
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+window.scrollTo(0, 0);
+
 import { lin, gam, toLab, fromLab, mix, lum, ratio, readable, css } from "./utils/color.js";
 
 /* ---------- theme: palettes at four times of day, blended between them ---------- */
