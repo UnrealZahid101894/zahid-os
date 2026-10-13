@@ -20,10 +20,23 @@ export const WK = [
     sh: '<rect class="a" width="100" height="70"/><rect class="c" x="14" y="48" width="14" height="14"/><rect class="c" x="34" y="38" width="14" height="24"/><rect x="54" y="26" width="14" height="36"/><rect class="b" x="74" y="12" width="14" height="50"/>' },
   { t: "Rendrx", tag: ["HTML", "Landing page"], sub: "A creative studio landing page", repo: "Agency_website", live: "", img: "assets/img/projects/agency-website.png",
     d: "Showcase landing page for a creative studio offering three core services: video production, motion graphics and web development.",
-    sh: '<rect class="a" width="100" height="70"/><rect x="8" y="14" width="26" height="42"/><path class="w" d="M17 28 L27 35 L17 42Z"/><rect class="c" x="37" y="14" width="26" height="42"/><circle class="b" cx="50" cy="35" r="8"/><rect x="66" y="14" width="26" height="42"/><rect class="c" x="70" y="20" width="18" height="3"/><rect class="c" x="70" y="27" width="12" height="3"/>' }
+    sh: '<rect class="a" width="100" height="70"/><rect x="8" y="14" width="26" height="42"/><path class="w" d="M17 28 L27 35 L17 42Z"/><rect class="c" x="37" y="14" width="26" height="42"/><circle class="b" cx="50" cy="35" r="8"/><rect x="66" y="14" width="26" height="42"/><rect class="c" x="70" y="20" width="18" height="3"/><rect class="c" x="70" y="27" width="12" height="3"/>' },
+
+  { t: "Valentine Site", tag: ["CSS", "Animation"], sub: "Interactive Valentine's web experience", repo: "valentine-site", live: "",
+    d: "Animated, interactive Valentine's web experience. Pure CSS animations and vanilla JS.",
+    sh: '<rect class="a" width="100" height="70"/><rect class="c" x="14" y="14" width="24" height="42"/><rect class="c" x="42" y="24" width="18" height="22"/><circle class="b" cx="82" cy="20" r="6"/>' },
+  { t: "Job Tracker", tag: ["Java"], sub: "Desktop job application tracker", repo: "JobApplicationTracker", live: "",
+    d: "Desktop job tracker built in Java, third semester. Solving real problems, not just assignments.",
+    sh: '<rect class="a" width="100" height="70"/><rect x="8" y="10" width="20" height="3"/><rect class="c" x="8" y="20" width="46" height="3"/><rect class="c" x="8" y="30" width="34" height="3"/><rect class="b" x="8" y="44" width="10" height="10"/>' },
+  { t: "Frontend Experiments", tag: ["JS", "CSS"], sub: "Ongoing personal collection", repo: "Frontend-projects", live: "",
+    d: "Ongoing collection of personal web experiments. Curiosity-driven, no reason to exist.",
+    sh: '<rect class="a" width="100" height="70"/><circle class="b" cx="30" cy="35" r="10"/><circle class="c" cx="52" cy="35" r="10"/><circle class="c" cx="74" cy="35" r="10"/>' },
+  { t: "GitHub Customization", tag: ["OSS"], sub: "Profile beautification guide", repo: "GitHub-customization", live: "",
+    d: "Curated fork of a GitHub profile beautification guide. Badges, stats widgets, layout techniques.",
+    sh: '<rect class="a" width="100" height="70"/><rect x="8" y="10" width="14" height="4"/><rect class="c" x="8" y="20" width="46" height="3"/><rect class="c" x="8" y="30" width="34" height="3"/><rect class="b" x="8" y="48" width="84" height="10"/>' }
 ];
 
-export const WK_MAIN = WK.slice(0, 4);
+export const WK_MAIN = WK;
 
 export const WK_CS = {
   "Main-portfolio": { brief: "My first portfolio, written as a single file: no framework, no build step, no bundler. Over-engineered on purpose and never quite finished.", hi: ["A Three.js wireframe globe with a Dhaka marker and mouse-tracked rotation. Every material is pushed into one array at creation, so the whole globe recolors in a single pass with no geometry rebuild.", "The splash measures the ZAHID title before drawing it, and force-loads the font first so the first frame never lays out in a fallback face.", "The terminals type raw text first, then swap in syntax-highlighted HTML once a line finishes, so highlighting never breaks the typing animation.", "The cursor moves with transform instead of top/left, which keeps it on the compositor thread."], stack: ["HTML", "CSS", "JavaScript", "Three.js r128", "Google Fonts", "Vercel"] },

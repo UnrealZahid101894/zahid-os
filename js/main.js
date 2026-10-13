@@ -13,7 +13,7 @@ import { sY, setScrollY } from "./utils/scroll.js";
 import { paint, setTime, reduce, getT } from "./theme.js";
 import { scramble } from "./scramble.js";
 import { initLoader } from "./loader.js";
-import { PHOTO, PH_A, PH_B, GH, WK, WK_MAIN, WK_CS, SVC } from "./data.js";
+import { PHOTO, PH_A, PH_B, GH, WK, WK_MAIN, WK_CS, SVC } from "./data.js?v=2";
 import { svcHTML, HOME, wkModal, PANELS, aboutHTML, selHTML } from "./templates.js";
 import { initWorks, getOpenProject } from "./works/index.js";
 import { fitHome, initHomeDrop } from "./sections/home.js";

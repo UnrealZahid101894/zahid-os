@@ -96,12 +96,49 @@ export function aboutHTML() {
   return `<section class="ab"><h2 class="ab-t" aria-label="About me">${[..."About me"].map(c => c === " " ? '<span class="ac sp" aria-hidden="true"></span>' : `<span class="ac" aria-hidden="true">${c}</span>`).join("")}</h2><div class="ab-scene"><div class="ab-b"><div class="ab-r"><b>2/5</b><span>For me</span><b>CSE/2</b></div><h3 class="ab-h" aria-label="Code is not just syntax, but a tool for logic and security.">${ln}</h3>${CUR}</div></div></section>`;
 }
 /* about: letters are boxes. They fall, land on the floor or on each other, and stack; a box that is less than half supported slides off. */
-
 export function selHTML() {
-  const cards = WK_MAIN.map((p, i) => `<article class="sw-ch" data-i="${i}" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Open ${p.t}"><div class="sw-fr"><div class="sw-pl" data-k="0">${p.img ? `<img src="${p.img}" alt="${p.t} preview" loading="lazy" decoding="async">` : `<svg viewBox="0 0 100 70" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${p.sh}</svg>`}<span class="tg">${p.tag[0] || "Project"}</span></div></div><div class="sw-tx"><div class="sw-nm mk" data-k="1"><h3>${p.t}</h3></div><div class="sw-ft" data-k="2"><span>0${i + 1} / 0${WK_MAIN.length}</span><span>Visit <i aria-hidden="true">↗</i></span></div></div></article>`).join("");
-  return `<section class="sw"><div class="sw-scene"><div class="sw-pin"><div class="sw-r"><b>3/5</b><span>Recent work</span><b>0${WK_MAIN.length} PROJECTS</b></div>
-    <div class="sw-track"><svg class="sw-ln" aria-hidden="true"><path d=""/></svg>
-    <div class="sw-in"><span class="sw-kb" data-k="0">Keep scrolling</span><h2 class="sw-h" aria-label="Recent work"><span class="mk" data-k="1"><span>Recent</span></span><span class="mk" data-k="2"><span>Work</span></span></h2><p data-k="3">Things I built, from late-night experiments to a product for a friend’s startup. Click a card to open it.</p><a class="sw-go" href="https://github.com/UnrealZahid101894?tab=repositories" target="_blank" rel="noopener" data-k="4">Explore more <i aria-hidden="true">↗</i></a></div>
-    ${cards}
-    <a class="sw-end" href="projects.html"><span class="mk" data-k="0"><span>Full</span></span><span class="mk" data-k="1"><span>list</span></span><em data-k="2">All projects <i aria-hidden="true">↗</i></em></a></div></div></div></section>`;
+  const names = WK_MAIN.map((p, i) =>
+    `<button class="sw-name${i === 0 ? " on" : ""}" data-i="${i}" type="button" aria-label="Show ${p.t}">
+      <span class="sw-name-n">${String(i + 1).padStart(2, "0")}</span>
+      <span class="sw-name-t">${p.t}</span>
+    </button>`
+  ).join("");
+
+  const slides = WK_MAIN.map((p, i) => {
+    const media = p.img
+      ? `<img src="${p.img}" alt="${p.t} preview" loading="lazy" decoding="async">`
+      : `<svg viewBox="0 0 100 70" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${p.sh}</svg>`;
+    return `<div class="sw-slide${i === 0 ? " on" : ""}" data-i="${i}">${media}</div>`;
+  }).join("");
+
+  const details = WK_MAIN.map((p, i) => {
+    const meta  = WK_CS[p.repo] || {};
+    const tags  = (meta.stack || p.tag || []).slice(0, 4).map(t => `<span>${t}</span>`).join("");
+    const brief = meta.brief || p.d || "";
+    return `<div class="sw-det${i === 0 ? " on" : ""}" data-i="${i}">
+      <div class="sw-det-tags">${tags}</div>
+      <p class="sw-det-desc">${brief}</p>
+      <a class="sw-det-go" href="${GH}${p.repo}" target="_blank" rel="noopener">
+        View <i aria-hidden="true">↗</i>
+      </a>
+    </div>`;
+  }).join("");
+
+  return `<section class="sw">
+    <div class="sw-scene">
+      <div class="sw-pin">
+        <header class="sw-r">
+          <b>3/5</b>
+          <span>Recent work</span>
+          <b>${String(WK_MAIN.length).padStart(2, "0")} PROJECTS</b>
+        </header>
+        <div class="sw-stage">
+          <nav class="sw-names" aria-label="Project list">${names}</nav>
+          <div class="sw-media"><div class="sw-stack">${slides}</div></div>
+          <aside class="sw-det-wrap" aria-live="polite">${details}</aside>
+        </div>
+        <div class="sw-prog" aria-hidden="true"><span class="sw-prog-bar"></span></div>
+      </div>
+    </div>
+  </section>`;
 }
