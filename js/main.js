@@ -30,7 +30,41 @@ panel.setAttribute("aria-live", "off");
 panel.innerHTML = SECS.map(([k, h]) => `<div class="pg" id="s-${k}">${h}</div>`).join("");
 document.body.classList.add("one");
 const hdr = document.querySelector("header"), navs = [...document.querySelectorAll(".nav")], sec = k => document.getElementById("s-" + (k || "home"));
-let SM = null;   // smooth-scroll engine, set below
+let SM = null;   // legacy smooth-scroll engine (unused)
+
+/* ── smooth scroll position ──
+   Every scroll-driven animation reads its position through sY() (see
+   js/utils/scroll.js). On desktop raw scrollY is fine. On mobile a flick
+   delivers 100–300 px jumps per frame, which jitters the letter physics,
+   the About curtain, the sideways works track and the letter-drop reveals.
+   We lerp the value so animations glide instead of snapping. `window.scrollY`
+   is still the raw number for the header hide/show and the reveal
+   observers, which need to react instantly. */
+let smoothY = window.scrollY;
+let targetY = window.scrollY;
+let scrollRaf = 0;
+const LERP      = 0.2;    // 0 = never moves, 1 = instant
+const LERP_FAST = 0.4;    // aggressive when the gap is large (fast flick)
+const SNAP_PX   = 0.6;    // below this, snap and stop
+
+function scrollStep() {
+  scrollRaf = 0;
+  const gap = targetY - smoothY;
+  const k = Math.abs(gap) > 260 ? LERP_FAST : LERP;
+  smoothY += gap * k;
+  if (Math.abs(targetY - smoothY) < SNAP_PX) smoothY = targetY;
+  else scrollRaf = requestAnimationFrame(scrollStep);
+}
+addEventListener("scroll", () => {
+  const h = Math.max(0, document.documentElement.scrollHeight - innerHeight);
+  targetY = Math.max(0, Math.min(window.scrollY, h));   // clamp over/under-scroll
+  if (!scrollRaf) scrollRaf = requestAnimationFrame(scrollStep);
+}, { passive: true });
+addEventListener("resize", () => {
+  targetY = window.scrollY;
+  if (Math.abs(targetY - smoothY) > 500) smoothY = targetY;
+}, { passive: true });
+setScrollY(() => smoothY);
 function go(key) {
   try { history.replaceState(null, "", key ? "#" + key : location.pathname + location.search); } catch (e) {}
   const el = sec(key);
