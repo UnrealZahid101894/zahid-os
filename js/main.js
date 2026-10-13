@@ -93,7 +93,7 @@ document.getElementById("home").addEventListener("click", () => go(null));
 
 /* reveal targets: .rc wipes text up out of a mask, .rv fades + rises. Checked on scroll (no observer, so clip-paths can't hide them from it). */
 const RC = [".sv-top h2", ".wk-lab", ".wk-list li"],
-      RV = [".hm-card", ".hm-based", ".hm-intro", ".sv-top span", ".wk-th", ".wk-caps", ".wk-more"];
+      RV = [".hm-card", ".hm-based", ".hm-intro", ".sv-top > span", ".wk-th", ".wk-caps", ".wk-more"];
 RC.forEach(q => panel.querySelectorAll(q).forEach((el, i) => { el.classList.add("rc"); if (q === ".wk-list li") el.style.setProperty("--rd", i * .08 + "s"); }));
 RV.forEach((q, n) => panel.querySelectorAll(q).forEach(el => { el.classList.add("rv"); el.style.setProperty("--rd", (n % 3) * .12 + "s"); }));
 /* stagger groups: siblings cascade in rather than appearing at once */
@@ -166,6 +166,7 @@ initConnect(panel);
 initAbout();
 initCurtain();
 initAbTitle();
+initAbTitle(".big-head");
 initSel(panel);
 initWorks();
 initCursor();

@@ -5,7 +5,7 @@
 import { PHOTO, PH_A, PH_B, GH, WK, WK_MAIN, WK_CS, SVC } from "./data.js";
 
 export const svcHTML = () => `<section class="sv">
-  <div class="sv-top"><h2>Stack</h2><span>DEV/5</span></div>
+  <div class="sv-top"><h2 class="big-head" aria-label="Stack">${[..."STACK"].map(c => `<span class="ac" aria-hidden="true">${c}</span>`).join("")}</h2><span>DEV/5</span></div>
   <div class="acc">${SVC.map(([t, l, d, sh], i) => `
     <div class="col" role="button" aria-label="${t.replace("|", " ")}" style="--i:${i}">
       <b class="n">00-${i + 1}</b>
@@ -127,11 +127,10 @@ export function selHTML() {
   return `<section class="sw">
     <div class="sw-scene">
       <div class="sw-pin">
-        <header class="sw-r">
-          <b>3/5</b>
-          <span>Recent work</span>
-          <b>${String(WK_MAIN.length).padStart(2, "0")} PROJECTS</b>
-        </header>
+        <div class="sw-top">
+          <span>03/05</span>
+          <h2 class="big-head" aria-label="Projects">${[..."PROJECTS"].map(c => `<span class="ac" aria-hidden="true">${c}</span>`).join("")}</h2>
+        </div>
         <div class="sw-stage">
           <nav class="sw-names" aria-label="Project list">${names}</nav>
           <div class="sw-media"><div class="sw-stack">${slides}</div></div>

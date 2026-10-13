@@ -7,8 +7,12 @@ import { sY } from "../utils/scroll.js";
 // Physics frame counter (used by abPhys for sleep checks)
 let abF = 0;
 
-export function initAbTitle() {
-  panel.querySelectorAll(".ab-t").forEach(t => {
+export function initAbTitle(selector = ".ab-t") {
+  /* the letters inside these headings must not carry .rv/.rc — they have
+     their own drop animation and the reveal's opacity:0 would hide them */
+  panel.querySelectorAll(selector + " .ac").forEach(sp => sp.classList.remove("rv", "rc", "in"));
+
+  panel.querySelectorAll(selector).forEach(t => {
   const L = [...t.querySelectorAll(".ac")], ease = v => 1 - Math.pow(1 - v, 4), jit = L.map((_, i) => ((i * 37) % 11) / 11); let d = [], sd = [], tk = false, tp = 0, cp = 0, raf = 0;
   const meas = () => { L.forEach(e => e.style.transform = ""); const c = t.clientWidth / 2, xs = L.map(e => Math.abs(e.offsetLeft + e.offsetWidth / 2 - c)), m = Math.max(...xs) || 1; d = xs.map(x => x / m); sd = L.map(e => e.offsetLeft + e.offsetWidth / 2 < c ? -1 : 1); draw(); };
   const draw = () => L.forEach((e, i) => { if (e.classList.contains("sp")) return;

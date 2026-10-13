@@ -1,4 +1,6 @@
-/* ── recent work: sticky stage with stacked card previews ── */
+/* ── recent work: horizontal card with hover/wheel interaction ──
+   Page scroll is normal. Only the names column and the media box
+   capture the wheel, so hovering them cycles projects. */
 .sw {
   --c: "Barlow Condensed", "Arial Narrow", sans-serif;
   --m: "Spline Sans Mono", ui-monospace, Menlo, Consolas, monospace;
@@ -6,41 +8,38 @@
   text-transform: uppercase;
   color: var(--fg);
   position: relative;
+  padding: clamp(60px, 9vh, 110px) 3vw clamp(80px, 12vh, 140px);
 }
 
-.sw-scene { position: relative; }
 .sw-pin {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  height: 100dvh;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  gap: clamp(24px, 4vh, 48px);
+  min-height: clamp(520px, 74vh, 760px);
 }
 
 /* top rule */
 .sw-r {
   display: grid;
-  grid-template-columns: minmax(180px, 22vw) 1fr auto;
+  grid-template-columns: minmax(140px, 20vw) 1fr auto;
   align-items: center;
   gap: 24px;
-  padding: 3vw 3vw 0;
   flex: none;
+  padding-bottom: clamp(20px, 3vh, 40px);
+  border-bottom: 1px solid color-mix(in srgb, var(--fg) 10%, transparent);
 }
-.sw-r b   { font: 700 2.4vw/1 var(--c); }
-.sw-r span{ font: 400 1.1vw/1 var(--m); letter-spacing: .02em; }
+.sw-r b    { font: 700 2.4vw/1 var(--c); }
+.sw-r span { font: 400 1.1vw/1 var(--m); letter-spacing: .02em; }
 .sw-r b:last-child { font: 700 1.9vw/1 var(--c); letter-spacing: -.03em; }
 
 /* three-column stage */
 .sw-stage {
   flex: 1;
-  min-height: 0;
   display: grid;
-  grid-template-columns: minmax(200px, 1fr) minmax(260px, 1.2fr) minmax(200px, 1fr);
-  gap: clamp(28px, 4vw, 72px);
+  grid-template-columns: minmax(180px, .95fr) minmax(360px, 1.7fr) minmax(220px, 1fr);
+  gap: clamp(28px, 3.5vw, 64px);
   align-items: center;
-  padding: 0 3vw;
+  min-height: 0;
 }
 
 /* ── left: names, left-aligned ── */
@@ -50,13 +49,16 @@
   gap: 2px;
   min-width: 0;
   align-items: flex-start;
+  padding: 10px 0;
+  /* subtle hint that this is interactive */
+  cursor: ns-resize;
 }
 .sw-name {
   display: grid;
   grid-template-columns: 2.6em 1fr;
   align-items: baseline;
   gap: .8em;
-  padding: .55em 0;
+  padding: .5em 0;
   background: none;
   border: 0;
   text-align: left;
@@ -67,19 +69,10 @@
   text-transform: uppercase;
   outline: none;
   -webkit-tap-highlight-color: transparent;
-  transition: color .45s var(--e), transform .6s var(--e), opacity .45s var(--e);
+  transition: color .45s var(--e), transform .55s var(--e), opacity .45s var(--e);
 }
-.sw-name-n {
-  font-size: .85em;
-  opacity: .5;
-  transition: color .4s var(--e), opacity .4s var(--e);
-}
-.sw-name-t {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+.sw-name-n { font-size: .85em; opacity: .45; transition: color .4s var(--e), opacity .4s var(--e); }
+.sw-name-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sw-name:hover { color: var(--fg); }
 .sw-name.on {
   color: var(--fg);
@@ -88,34 +81,27 @@
 .sw-name.on .sw-name-n { opacity: 1; color: var(--ac); }
 .sw-name:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
 
-/* ── center: stacked media ── */
+/* ── center: horizontal media, 16/9 ── */
 .sw-media {
   position: relative;
   width: 100%;
-  height: 100%;
-  min-height: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  max-width: 780px;
+  aspect-ratio: 16 / 9;
+  justify-self: center;
+  align-self: center;
+  cursor: ns-resize;
+  /* overflow visible: peeking slides stay visible above / below */
 }
-.sw-stack {
-  position: relative;
-  width: min(100%, 340px);
-  aspect-ratio: 3 / 4;
-  max-height: 60vh;
-}
+.sw-stack { position: absolute; inset: 0; }
+
 .sw-slide {
   position: absolute;
   inset: 0;
   overflow: hidden;
-  background: color-mix(in srgb, var(--fg) 4%, transparent);
-  will-change: transform, opacity;
-  transition:
-    transform .85s var(--e),
-    opacity  .75s var(--e),
-    filter   .55s var(--e);
-  transform-origin: 50% 50%;
+  background: color-mix(in srgb, var(--fg) 5%, transparent);
+  will-change: transform, opacity, filter;
   backface-visibility: hidden;
+  /* transform + opacity set by JS */
 }
 .sw-slide img {
   display: block;
@@ -134,7 +120,7 @@
 .sw-slide svg .w { fill: var(--bg); }
 
 /* ── right: details ── */
-.sw-det-wrap { position: relative; min-width: 0; min-height: 180px; }
+.sw-det-wrap { position: relative; min-width: 0; min-height: 220px; }
 .sw-det {
   position: absolute;
   inset: 0;
@@ -142,11 +128,11 @@
   flex-direction: column;
   gap: 1.1em;
   opacity: 0;
-  transform: translateY(12px);
-  transition: opacity .5s var(--e), transform .65s var(--e);
+  transform: translateY(14px);
+  transition: opacity .55s var(--e), transform .7s var(--e);
   pointer-events: none;
 }
-.sw-det.on { opacity: 1; transform: none; pointer-events: auto; transition-delay: .1s; }
+.sw-det.on { opacity: 1; transform: none; pointer-events: auto; transition-delay: .12s; }
 .sw-det-tags {
   display: flex; flex-wrap: wrap; gap: 7px;
   font: 400 clamp(9px, .7vw, 10px)/1 var(--m);
@@ -156,14 +142,16 @@
 .sw-det-tags span {
   border: 1px solid color-mix(in srgb, var(--fg) 15%, transparent);
   padding: 5px 9px;
+  transition: color .3s var(--e), border-color .3s var(--e);
 }
+.sw-det.on:hover .sw-det-tags span { color: var(--fg); border-color: color-mix(in srgb, var(--fg) 32%, transparent); }
 .sw-det-desc {
   margin: 0;
   font: 300 clamp(11px, .85vw, 13px)/1.65 var(--m);
   letter-spacing: .02em;
   text-transform: none;
   color: var(--fg);
-  max-width: 32ch;
+  max-width: 34ch;
 }
 .sw-det-go {
   display: inline-flex;
@@ -182,47 +170,81 @@
 .sw-det-go i { font-style: normal; display: inline-block; transition: transform .5s var(--e); }
 .sw-det-go:hover i, .sw-det-go:focus-visible i { transform: translate(3px, -3px); }
 
-/* ── progress bar ── */
-.sw-prog {
-  position: absolute;
-  left: 3vw;
-  right: 3vw;
-  bottom: 3vw;
-  height: 1px;
-  background: color-mix(in srgb, var(--fg) 12%, transparent);
-  pointer-events: none;
-}
-.sw-prog-bar {
-  display: block;
-  height: 100%;
-  background: var(--ac);
-  transform-origin: 0 50%;
-  transform: scaleX(0);
-  transition: transform .12s linear;
-}
-
-/* ── mobile fallback ── */
-@media (max-width: 720px) {
-  .sw-scene { height: auto !important; }
-  .sw-pin { position: static; height: auto; overflow: visible; display: block; padding: 40px 0 20px; }
-  .sw-r { grid-template-columns: auto 1fr auto; padding: 0 20px 24px; }
-  .sw-r b, .sw-r span, .sw-r b:last-child { font-size: 11px; letter-spacing: .08em; }
-  .sw-stage { display: block; padding: 0 20px; }
-  .sw-names { flex-direction: row; overflow-x: auto; gap: 14px; padding: 0 0 16px; scrollbar-width: none; }
+/* ── mobile: static stacked list, no interaction ── */
+@media (max-width: 900px) {
+  .sw { padding: 60px 20px 80px; }
+  .sw-pin { min-height: 0; gap: 28px; }
+  .sw-r { grid-template-columns: auto 1fr auto; gap: 12px; padding-bottom: 18px; }
+  .sw-r b, .sw-r span, .sw-r b:last-child { font-size: 11px; letter-spacing: .06em; }
+  .sw-stage { display: block; }
+  .sw-names { flex-direction: row; overflow-x: auto; gap: 14px; padding: 0 0 16px; scrollbar-width: none; cursor: default; }
   .sw-names::-webkit-scrollbar { display: none; }
   .sw-name { grid-template-columns: auto; padding: 8px 0; font-size: 11px; }
   .sw-name.on { transform: none; }
   .sw-name-n { display: none; }
-  .sw-stack { width: 100%; max-height: none; aspect-ratio: 3 / 4; margin-bottom: 22px; }
-  .sw-slide { position: relative; inset: auto; opacity: 0; display: none; transform: none !important; }
-  .sw-slide.on { display: block; opacity: 1; }
+  .sw-media { aspect-ratio: 16 / 9; margin-bottom: 22px; cursor: default; }
+  .sw-slide { position: relative; inset: auto; display: none; transform: none !important; opacity: 1 !important; filter: none !important; }
+  .sw-slide.on { display: block; }
   .sw-det-wrap { min-height: 0; position: static; }
-  .sw-det { position: static; inset: auto; opacity: 0; transform: none; display: none; }
-  .sw-det.on { display: flex; opacity: 1; }
+  .sw-det { position: static; inset: auto; display: none; opacity: 1; transform: none; }
+  .sw-det.on { display: flex; }
   .sw-det-desc { font-size: 13px; line-height: 1.7; max-width: none; }
-  .sw-prog { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .sw-slide, .sw-det, .sw-name, .sw-det-go i { transition: none !important; }
+}
+
+
+/* ── section header: huge PROJECTS title, right-aligned, letter drop ── */
+.sw-top {
+  position: relative;
+  z-index: 5;
+  background: var(--bg);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 0 0 clamp(160px, 24vh, 280px);   /* much more space below */
+}
+.sw-top h2.big-head {
+  margin: 0 -.03em 0 0;
+  font: 700 clamp(56px, 13vw, 210px)/.84 var(--c);
+  letter-spacing: -.02em;
+  text-transform: uppercase;
+  color: var(--fg);
+  text-align: right;
+  overflow: clip;
+  padding: 0 0 .06em;
+}
+.sw-top > span {
+  font: 600 clamp(18px, 2.2vw, 32px)/1 var(--c);
+  letter-spacing: 0;
+  align-self: flex-start;
+  padding-top: .6em;
+  color: var(--fg);
+  text-transform: uppercase;
+}
+
+/* letter spans used by initAbTitle */
+.big-head .ac {
+  display: inline-block;
+  will-change: transform;
+  transform-origin: 50% 100%;
+}
+.big-head .ac.sp { width: .22em; }
+
+@media (max-width: 900px) {
+  .sw-top { padding: 0 0 40px; }
+  .sw-top h2.big-head { font-size: clamp(44px, 16vw, 88px); }
+  .sw-top > span { font-size: 14px; }
+}
+
+/* ── force the heading size regardless of what other rules do ── */
+.sv-top h2.big-head,
+.sw-top h2.big-head {
+  font: 700 clamp(56px, 13vw, 210px)/.84 "Barlow Condensed", "Arial Narrow", sans-serif !important;
+  letter-spacing: -.02em !important;
+  text-transform: uppercase;
+  margin: 0 !important;
 }

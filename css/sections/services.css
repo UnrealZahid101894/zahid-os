@@ -14,7 +14,7 @@
   .sv-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px;
     padding: clamp(28px, 7vh, 80px) var(--pad) clamp(28px, 8vh, 90px); }
   .sv-top h2 { margin: 0 0 0 -.03em; font: 700 clamp(56px, 13vw, 210px)/.84 var(--c); letter-spacing: -.02em; }
-  .sv-top span { font: 600 clamp(18px, 2.2vw, 32px)/1 var(--c); letter-spacing: 0; }
+  .sv-top > span { font: 600 clamp(18px, 2.2vw, 32px)/1 var(--c); letter-spacing: 0; }
   .acc { display: flex; height: clamp(460px, 64vh, 720px); border-top: 1px solid var(--fg); container-type: inline-size; }
   .col { position: relative; flex: 1 1 0; min-width: 0; overflow: hidden; cursor: pointer; outline: none; -webkit-tap-highlight-color: transparent;
     background: linear-gradient(var(--fg), var(--fg)) left / 1px 100% no-repeat; transition: flex-grow var(--dur) var(--ease);
@@ -59,3 +59,24 @@
   @media (prefers-reduced-motion: reduce) { .sv { --dur: .01s; } .col { animation: none; } .col .n, .col .t, .ex, .ex-b li span { transition: none !important; } }
 
 .col, .col * { touch-action: manipulation; }
+
+
+/* ── letter span drop animation for the STACK heading ── */
+.sv-top h2.big-head {
+  overflow: clip;
+  padding: 0 0 .06em;
+}
+.big-head .ac {
+  display: inline-block;
+  will-change: transform;
+  transform-origin: 50% 100%;
+}
+
+
+/* force heading size — services page */
+.sv-top h2.big-head {
+  font: 700 clamp(56px, 13vw, 210px)/.84 "Barlow Condensed", "Arial Narrow", sans-serif !important;
+  letter-spacing: -.02em !important;
+  text-transform: uppercase;
+  margin: 0 !important;
+}
