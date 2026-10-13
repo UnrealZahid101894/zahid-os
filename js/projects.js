@@ -142,3 +142,36 @@ if (back) back.addEventListener("click", (e) => {
     history.back();
   }
 });
+
+
+/* ── back button: scramble on hover/focus ── */
+const GLYPHS = "!<>-_/[]{}=+*^?#0123456789";
+function scrambleText(el) {
+  const text = el.dataset.text || el.textContent.trim();
+  el.dataset.text = text;
+  cancelAnimationFrame(el._raf);
+  const t0 = performance.now();
+  const settle = [...text].map((_, i) => 140 + i * 60 + Math.random() * 120);
+  const end = Math.max(...settle);
+  (function frame(now) {
+    const t = now - t0, slot = Math.floor(t / 55);
+    let out = "";
+    for (let i = 0; i < text.length; i++) {
+      out += t >= settle[i] ? text[i]
+        : GLYPHS[(Math.imul(slot * 31 + i * 17 + 7, 2654435761) >>> 0) % GLYPHS.length];
+    }
+    el.textContent = out;
+    if (t < end) el._raf = requestAnimationFrame(frame);
+    else el.textContent = text;
+  })(t0);
+}
+
+const backLink  = document.querySelector(".pk-back");
+const backLabel = backLink && backLink.querySelector(".t");
+if (backLink && backLabel) {
+  backLabel.dataset.text = backLabel.textContent.trim();
+  backLink.addEventListener("mouseenter", () => scrambleText(backLabel));
+  backLink.addEventListener("focus", () => {
+    if (backLink.matches(":focus-visible")) scrambleText(backLabel);
+  });
+}

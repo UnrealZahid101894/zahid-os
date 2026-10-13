@@ -8,6 +8,20 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spline+Sans+Mono:wght@300;400;500;600&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<script>
+/* apply the palette last set by the main site's dial */
+try {
+  var saved = localStorage.getItem("zahid_theme");
+  if (saved) {
+    var t = JSON.parse(saved);
+    var r = document.documentElement.style;
+    if (t.bg)  r.setProperty("--bg",  "rgb(" + t.bg  + ")");
+    if (t.fg)  r.setProperty("--fg",  "rgb(" + t.fg  + ")");
+    if (t.ac)  r.setProperty("--ac",  "rgb(" + t.ac  + ")");
+    if (t.dim) r.setProperty("--dim", "rgb(" + t.dim + ")");
+  }
+} catch (e) {}
+</script>
 <link rel="stylesheet" href="css/projects.css">
 </head>
 <body>
@@ -21,6 +35,6 @@
   <nav class="pk-filter" id="pk-filter" aria-label="Filter projects"></nav>
   <ol class="pk-list" id="pk-list"></ol>
 </main>
-<script type="module" src="js/projects.js"></script>
+<script type="module" src="js/projects.js?v=3"></script>
 </body>
 </html>

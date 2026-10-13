@@ -69,9 +69,9 @@ export const PANELS = {
         <div class="addr">Address:<br>Dhaka, Bangladesh</div>
       </div>
       <div class="row3">
-        <a class="bk" href="https://github.com/" target="_blank" rel="noopener"><i class="l">[</i> GitHub <i class="r">]</i></a>
-        <a class="bk" href="https://linkedin.com/" target="_blank" rel="noopener"><i class="l">[</i> LinkedIn <i class="r">]</i></a>
-        <a class="bk" href="https://x.com/" target="_blank" rel="noopener"><i class="l">[</i> X <i class="r">]</i></a>
+        <a class="bk" href="https://github.com/" target="_blank" rel="noopener"><i class="l">[</i> <span class="t" data-text="GITHUB">GITHUB</span> <i class="r">]</i></a>
+        <a class="bk" href="https://linkedin.com/" target="_blank" rel="noopener"><i class="l">[</i> <span class="t" data-text="LINKEDIN">LINKEDIN</span> <i class="r">]</i></a>
+        <a class="bk" href="https://x.com/" target="_blank" rel="noopener"><i class="l">[</i> <span class="t" data-text="X">X</span> <i class="r">]</i></a>
       </div>
     </div>
     <div class="mask gmask"><div class="mi"><span class="giant" id="giant">ZAHID.OS</span></div></div>

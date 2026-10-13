@@ -24,3 +24,52 @@
 
 
   
+
+/* ═══════════════════════════════════════════════════════════════════
+   scroll polish: refined reveals, parallax hints
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* refined reveal curves: tighter ease, shorter duration, subtle scale */
+.rv {
+  transform: translate3d(0, 34px, 0) scale(.985);
+  transition:
+    opacity 1.05s cubic-bezier(.16, 1, .3, 1),
+    transform 1.35s cubic-bezier(.16, 1, .3, 1);
+  transition-delay: var(--rd, 0s);
+  will-change: opacity, transform;
+}
+.rv.in {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+.rc {
+  transition:
+    opacity .85s cubic-bezier(.16, 1, .3, 1),
+    transform 1.45s cubic-bezier(.16, 1, .3, 1);
+  transition-delay: var(--rd, 0s);
+  will-change: opacity, transform;
+}
+.rc.in {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+/* parallax: promote to GPU layer while drifting */
+[data-px] {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* mobile: shorter reveals feel snappier on smaller screens */
+@media (max-width: 720px) {
+  .rv { transition-duration: .85s, 1.1s; }
+  .rc { transition-duration: .7s, 1.15s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rv, .rc { transition: none !important; }
+  [data-px] { transform: none !important; will-change: auto; }
+}

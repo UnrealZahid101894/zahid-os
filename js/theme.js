@@ -100,5 +100,17 @@ dial.addEventListener("keydown", e => {
   if (e.key === "ArrowLeft" || e.key === "ArrowDown") { setTime(T - .5, false); e.preventDefault(); }
 });
 
+/* persist the current palette so other pages (projects.html) can pick it up */
+export function saveTheme() {
+  try {
+    localStorage.setItem("zahid_theme", JSON.stringify({
+      bg: tgt.bg, fg: tgt.fg, ac: tgt.ac, dim: tgt.dim
+    }));
+  } catch(_) {}
+}
+dial.addEventListener("pointerup", saveTheme);
+addEventListener("visibilitychange", () => { if (document.hidden) saveTheme(); });
+addEventListener("pagehide", saveTheme);
+
 // Getter for the mutable T value (modules can't export live bindings)
 export function getT() { return T; }

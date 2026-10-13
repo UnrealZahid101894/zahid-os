@@ -43,14 +43,14 @@ let SM = null;   // legacy smooth-scroll engine (unused)
 let smoothY = window.scrollY;
 let targetY = window.scrollY;
 let scrollRaf = 0;
-const LERP      = 0.2;    // 0 = never moves, 1 = instant
-const LERP_FAST = 0.4;    // aggressive when the gap is large (fast flick)
-const SNAP_PX   = 0.6;    // below this, snap and stop
+const LERP      = 0.38;    // 0 = never moves, 1 = instant
+const LERP_FAST = 0.62;    // aggressive when the gap is large (fast flick)
+const SNAP_PX   = 0.5;    // below this, snap and stop
 
 function scrollStep() {
   scrollRaf = 0;
   const gap = targetY - smoothY;
-  const k = Math.abs(gap) > 260 ? LERP_FAST : LERP;
+  const k = Math.abs(gap) > 180 ? LERP_FAST : LERP;
   smoothY += gap * k;
   if (Math.abs(targetY - smoothY) < SNAP_PX) smoothY = targetY;
   else scrollRaf = requestAnimationFrame(scrollStep);
@@ -82,6 +82,13 @@ navs.forEach(btn => {
     if (matchMedia("(hover: none)").matches && label) scramble(label);
   });
 });
+/* footer social buttons: same scramble on hover/focus as the nav */
+panel.querySelectorAll(".bk .t").forEach(el => {
+  const a = el.closest(".bk");
+  if (!a) return;
+  a.addEventListener("mouseenter", () => scramble(el));
+  a.addEventListener("focus", () => { if (a.matches(":focus-visible")) scramble(el); });
+});
 document.getElementById("home").addEventListener("click", () => go(null));
 
 /* reveal targets: .rc wipes text up out of a mask, .rv fades + rises. Checked on scroll (no observer, so clip-paths can't hide them from it). */
@@ -89,6 +96,45 @@ const RC = [".sv-top h2", ".wk-lab", ".wk-list li"],
       RV = [".hm-card", ".hm-based", ".hm-intro", ".sv-top span", ".wk-th", ".wk-caps", ".wk-more"];
 RC.forEach(q => panel.querySelectorAll(q).forEach((el, i) => { el.classList.add("rc"); if (q === ".wk-list li") el.style.setProperty("--rd", i * .08 + "s"); }));
 RV.forEach((q, n) => panel.querySelectorAll(q).forEach(el => { el.classList.add("rv"); el.style.setProperty("--rd", (n % 3) * .12 + "s"); }));
+/* stagger groups: siblings cascade in rather than appearing at once */
+const STAGGER = [
+  [".cx .hero .mask", 0.10],   // connect hero lines
+  [".cx .cform > *",   0.06],  // form fields
+  [".cx .info > div",  0.09],  // info blocks
+];
+STAGGER.forEach(([sel, step]) => {
+  panel.querySelectorAll(sel).forEach((el, i) => {
+    el.classList.add("rv");
+    el.style.setProperty("--rd", (i * step).toFixed(3) + "s");
+  });
+});
+
+/* parallax: subtle vertical drift as elements cross the viewport.
+   Only desktop, only when motion is not reduced. */
+const PX = [
+  { sel: ".hm-h",     amt: 0.10 },   // hero heading rises slower than the page
+  { sel: ".hm-photo", amt: 0.06 },   // portrait drifts gently
+];
+const pxEls = [];
+PX.forEach(({ sel, amt }) => panel.querySelectorAll(sel).forEach(el => {
+  el.setAttribute("data-px", "");
+  pxEls.push({ el, amt });
+}));
+let pxPending = false;
+function pxUpdate() {
+  pxPending = false;
+  if (reduce || innerWidth < 721 || !pxEls.length) return;
+  const vh = innerHeight;
+  for (const { el, amt } of pxEls) {
+    const r = el.getBoundingClientRect();
+    if (r.bottom < -120 || r.top > vh + 120) continue;
+    const p = (vh - r.top) / (vh + r.height);     // 0 above, 1 below
+    const y = (p - 0.5) * 100 * amt;
+    el.style.transform = `translate3d(0,${y.toFixed(2)}px,0)`;
+  }
+}
+addEventListener("scroll", () => { if (!pxPending) { pxPending = true; requestAnimationFrame(pxUpdate); } }, { passive: true });
+addEventListener("resize", () => { if (!pxPending) { pxPending = true; requestAnimationFrame(pxUpdate); } }, { passive: true });
 let pend = [...panel.querySelectorAll(".rc, .rv, .acc")], ly2 = 0, tk2 = false;
 const hh = () => document.body.style.setProperty("--hh", hdr.offsetHeight + "px");
 function onScrollAll() {
