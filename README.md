@@ -1,6 +1,6 @@
-# zahid.os
+﻿# zahid.os
 
-![zahid.os — home](./assets/screenshot.png)
+![zahid.os â€” home](./assets/screenshot.png)
 
 A personal portfolio built as a single-page "operating system."
 
@@ -15,7 +15,7 @@ Plain HTML, CSS, and ES modules. No build step, no bundler, no dependencies.
 
 ## Running locally
 
-Any static server works — `fetch()` won't run from `file://`.
+Any static server works â€” `fetch()` won't run from `file://`.
 
     python3 -m http.server 8000
 
@@ -36,7 +36,7 @@ Then open <http://localhost:8000>.
       perf.css              Layout isolation for smoother scroll
       sections/             One file per page section
     js/
-      main.js               Entry — wires everything together
+      main.js               Entry â€” wires everything together
       theme.js              Color engine + dial
       loader.js             Boot sequence
       scramble.js           Nav glyph animation
@@ -54,6 +54,11 @@ Then open <http://localhost:8000>.
     assets/
       favicon.svg
       img/
+      sfx/                  Audio (see assets/sfx/README.md)
+        ui/                 Buttons, links, nav
+        crumble/            About letter physics
+        works/              Project modal
+        loader/             Boot sequence
 
 ## How it works
 
@@ -63,7 +68,7 @@ Then open <http://localhost:8000>.
   Dragging the header dial, or letting the loader sweep the whole day at
   boot, both call `paint(t)`.
 
-- **Sections.** All sections live in the same HTML document — the nav scrolls
+- **Sections.** All sections live in the same HTML document â€” the nav scrolls
   between them and each one runs its own init function once at boot. The
   About scene's letter physics is a small rigid-body simulation in
   `js/sections/about.js`.
@@ -81,16 +86,16 @@ Then open <http://localhost:8000>.
 
 Fully static. Deploys with zero configuration to:
 
-- **GitHub Pages** — push to `main`, enable Pages in settings
-- **Vercel** — import the repo, done
-- **Netlify** — drag the folder in, done
-- **Cloudflare Pages** — connect the repo, done
+- **GitHub Pages** â€” push to `main`, enable Pages in settings
+- **Vercel** â€” import the repo, done
+- **Netlify** â€” drag the folder in, done
+- **Cloudflare Pages** â€” connect the repo, done
 
 ## Browser support
 
-ES modules, `IntersectionObserver`, `color-mix()` — works in all modern
+ES modules, `IntersectionObserver`, `color-mix()` â€” works in all modern
 browsers. No IE, no legacy Safari.
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT â€” see [LICENSE](LICENSE).
