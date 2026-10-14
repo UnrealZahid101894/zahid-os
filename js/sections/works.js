@@ -151,12 +151,43 @@ export function initSel() {
   addEventListener("resize", () => {
     if (isNarrow()) {
       slides.forEach(s => { s.style.transform = ""; s.style.filter = ""; });
+      injectMobileCards();
     } else {
       layout(pos);
     }
   });
 
+  /* ── mobile: mirror the details into each slide as a self-contained card ── */
+  function injectMobileCards() {
+    if (!isNarrow()) return;
+    slides.forEach((slide, i) => {
+      if (slide.querySelector(".sw-slide-meta")) return;
+      const det = dets[i];
+      if (!det) return;
+      const tags = det.querySelector(".sw-det-tags");
+      const desc = det.querySelector(".sw-det-desc");
+      const go   = det.querySelector(".sw-det-go");
+      const meta = document.createElement("div");
+      meta.className = "sw-slide-meta";
+      const isLast = i === N - 1;
+      const hint = isLast
+        ? `<span class="sw-slide-hint">← swipe back</span>`
+        : `<span class="sw-slide-hint">swipe →</span>`;
+      meta.innerHTML = `
+        <div class="sw-det-tags">${tags ? tags.innerHTML : ""}</div>
+        <p class="sw-det-desc">${desc ? desc.textContent : ""}</p>
+        <div class="sw-slide-meta-foot">
+          <span class="sw-slide-meta-n">${String(i + 1).padStart(2, "0")} / ${String(N).padStart(2, "0")}</span>
+          <a class="sw-det-go" href="${go ? go.href : "#"}" target="_blank" rel="noopener">View <i aria-hidden="true">↗</i></a>
+        </div>
+        ${hint}
+      `;
+      slide.appendChild(meta);
+    });
+  }
+
   /* initial paint */
   layout(0);
   setActive(0);
+  injectMobileCards();
 }

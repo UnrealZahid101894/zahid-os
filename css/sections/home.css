@@ -18,7 +18,7 @@
   .hm-based { grid-column: 3; grid-row: 1; align-self: start; margin-top: calc(-1em - 10px); display: flex; justify-content: space-between;
     font: 700 clamp(11px, .85vw, 16px)/1 var(--c); letter-spacing: .85em; }
   .hm-based span:last-child { margin-right: -.85em; }
-  #panel .hm-intro { grid-column: 1 / -1; justify-self: center; text-align: center; max-width: 43ch; margin: clamp(28px, 2.6vw, 48px) 0 0; font: 300 clamp(13px, .95vw, 17px)/1.5 var(--m); }
+  #panel .hm-intro { padding-bottom: clamp(12px, 1.5vw, 24px); grid-column: 1 / -1; justify-self: center; text-align: center; max-width: 43ch; margin: clamp(28px, 2.6vw, 48px) 0 0; font: 300 clamp(13px, .95vw, 17px)/1.5 var(--m); }
   @media (max-width: 1100px) { .hm-based { letter-spacing: .3em; } .hm-based span:last-child { margin-right: -.3em; } }
   @media (max-width: 720px) {
     .hm-stage { grid-template-columns: 1fr; margin-top: 20px; }
@@ -27,7 +27,7 @@
     .hm-list { font-size: 19px; }
     .hm-based { grid-column: 1; grid-row: 2; margin: 22px 0 0; font-size: 12px; letter-spacing: .5em; }
     .hm-based span:last-child { margin-right: -.5em; }
-    #panel .hm-intro { grid-row: 3; font-size: 12px; margin-top: 28px; }
+    #panel .hm-intro { padding-bottom: clamp(12px, 1.5vw, 24px); grid-row: 3; font-size: 12px; margin-top: 28px; }
   }
 
   
@@ -128,7 +128,7 @@
   .hm-based span:last-child { margin-right: -.28em !important; }
 
   /* Intro */
-  #panel .hm-intro {
+  #panel .hm-intro { padding-bottom: clamp(12px, 1.5vw, 24px);
     grid-column: auto !important;
     margin: 26px 0 0 !important;
     padding: 0 4px !important;
@@ -237,7 +237,7 @@
   .hm-based span:last-child { margin-right: -.28em !important; }
 
   /* Intro */
-  #panel .hm-intro {
+  #panel .hm-intro { padding-bottom: clamp(12px, 1.5vw, 24px);
     grid-column: auto !important;
     margin: 26px 0 0 !important;
     padding: 0 4px !important;
@@ -259,4 +259,296 @@
     height: auto !important;
     vertical-align: baseline !important;
   }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   home hero: manifesto + footer (matches the reference layout)
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* three-word manifesto */
+.hm-manifesto {
+  grid-column: 1 / -1;
+  justify-self: center;
+  margin: clamp(28px, 3vw, 40px) 0 0 !important;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .9em;
+  font: 400 clamp(11px, .9vw, 14px)/1 "Spline Sans Mono", ui-monospace, Menlo, Consolas, monospace;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--dim);
+  text-align: center;
+}
+.hm-manifesto span { display: inline-block; }
+
+/* the small label */
+.hm-foot-label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: .55em;
+  font: 200 clamp(16px, 1.35vw, 22px)/1 "Spline Sans Mono", ui-monospace, Menlo, Consolas, monospace;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--fg);
+  text-decoration: none;
+  transition: color .3s ease;
+  white-space: nowrap;
+}
+
+.hm-foot-label i {
+  font-style: normal;
+  display: inline-block;
+  transition: transform .5s cubic-bezier(.16, 1, .3, 1);
+}
+.hm-foot-label:hover,
+.hm-foot-label:focus-visible { color: var(--ac); }
+.hm-foot-label:hover i,
+.hm-foot-label:focus-visible i { transform: translate(4px, 4px); }
+
+.hm-foot-label i {
+  font-style: normal;
+  display: inline-block;
+  transition: transform .5s cubic-bezier(.16, 1, .3, 1);
+}
+.hm-foot-label:hover,
+.hm-foot-label:focus-visible { color: var(--fg); }
+.hm-foot-label:hover i,
+.hm-foot-label:focus-visible i { transform: translate(4px, 4px); }
+
+/* the big text */
+.hm-foot-big {
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-weight: 600;
+  font-size: clamp(26px, 3.4vw, 58px);
+  line-height: 1;
+  letter-spacing: -.015em;
+  color: var(--fg);
+  text-decoration: none;
+  text-transform: none;
+  transition: color .3s ease;
+  word-break: break-word;
+}
+.hm-foot-big:hover,
+.hm-foot-big:focus-visible { color: var(--ac); }
+
+/* email specifically gets a heavy underline */
+.hm-foot-email {
+  position: relative;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  font-size: clamp(18px, 1.55vw, 26px);
+  line-height: 1.2;
+  letter-spacing: -.005em;
+  color: var(--fg);
+  text-decoration: none;
+  padding-bottom: 4px;
+  margin-left: 10ch;
+  transition: color .3s ease;
+  word-break: break-word;
+  display: inline-block;
+}
+.hm-foot-email::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform-origin: left;
+  transition: background .3s ease;
+}
+.hm-foot-email:hover,
+.hm-foot-email:focus-visible { color: var(--ac); }
+.hm-foot-email:hover::after,
+.hm-foot-email:focus-visible::after {
+  animation: hmWipe .8s cubic-bezier(.16, 1, .3, 1);
+}
+@keyframes hmWipe {
+  0%   { transform: scaleX(1); transform-origin: right; }
+  45%  { transform: scaleX(0); transform-origin: right; }
+  55%  { transform: scaleX(0); transform-origin: left; }
+  100% { transform: scaleX(1); transform-origin: left; }
+}
+.hm-foot-email:hover,
+.hm-foot-email:focus-visible { border-color: var(--ac); }
+
+/* right side big text (project count) — no underline */
+.hm-foot-col-right .hm-foot-big {
+  border-bottom: 0;
+}
+
+/* mobile */
+@media (max-width: 720px) {
+  .hm-manifesto { gap: .6em; font-size: 11px; letter-spacing: .18em; }
+  .hm-foot { flex-direction: column; align-items: flex-start; gap: 32px; }
+  .hm-foot-col-right { text-align: left; align-items: flex-start; }
+  .hm-foot-big { font-size: 32px; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   home hero footer: label + email centered underneath, thin underline
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* left column: label on top, email centered below it */
+.hm-foot-col {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;      /* centers the email under the label */
+  gap: 10px;
+  min-width: 0;
+}
+.hm-foot-col-right {
+  align-items: flex-end;
+}
+
+/* label — mono, medium weight, tracked out, --fg */
+$1400 clamp(13px, 1vw, 16px)/1 "Spline Sans Mono", ui-monospace, Menlo, Consolas, monospace;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--fg);
+  text-decoration: none;
+  transition: color .3s ease;
+  white-space: nowrap;
+}
+.hm-foot-label i {
+  font-style: normal;
+  display: inline-block;
+  transition: transform .5s cubic-bezier(.16, 1, .3, 1);
+}
+.hm-foot-label:hover,
+.hm-foot-label:focus-visible { color: var(--ac); }
+.hm-foot-label:hover i,
+.hm-foot-label:focus-visible i { transform: translate(3px, 3px); }
+
+/* email — normal sans, medium weight, one px underline, centered */
+.hm-foot-email {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  font-size: clamp(14px, 1.05vw, 17px);
+  line-height: 1.2;
+  letter-spacing: -.005em;
+  color: var(--fg);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+  transition: color .3s ease;
+  word-break: break-word;
+  max-width: 100%;
+}
+.hm-foot-email:hover,
+.hm-foot-email:focus-visible { color: var(--ac); }
+
+/* right side: label + big project count, no underline */
+.hm-foot-col-right .hm-foot-big {
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-weight: 600;
+  font-size: clamp(22px, 2.4vw, 40px);
+  line-height: 1;
+  letter-spacing: -.015em;
+  color: var(--fg);
+  text-decoration: none;
+  text-transform: none;
+  transition: color .3s ease;
+}
+.hm-foot-col-right .hm-foot-big:hover,
+.hm-foot-col-right .hm-foot-big:focus-visible { color: var(--ac); }
+
+/* mobile */
+@media (max-width: 720px) {
+  .hm-foot { flex-direction: column; align-items: flex-start; gap: 36px; }
+  .hm-foot-col { align-items: flex-start; }
+  .hm-foot-col-right { align-items: flex-start; }
+  .hm-foot-label { font-size: 12px; white-space: normal; }
+  .hm-foot-email { font-size: 13px; margin-left: 0; }
+  .hm-foot-col-right .hm-foot-big { font-size: 26px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   home hero footer (single source of truth)
+   ═══════════════════════════════════════════════════════════════════ */
+.hm-foot {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-top: clamp(48px, 5vw, 72px);
+  /* no top border, no padding — the previous rule is gone */
+}
+
+.hm-foot-col {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 0;
+}
+.hm-foot-col-right { align-items: flex-end; }
+
+/* label — mono, medium size, tracked out */
+.hm-foot-label {
+  display: inline-flex;
+  align-items: center;
+  gap: .55em;
+  font: 200 clamp(16px, 1.35vw, 22px)/1 "Spline Sans Mono", ui-monospace, Menlo, Consolas, monospace;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--fg);
+  text-decoration: none;
+  transition: color .3s ease;
+  white-space: nowrap;
+}
+.hm-foot-label i {
+  font-style: normal;
+  display: inline-block;
+  transition: transform .5s cubic-bezier(.16, 1, .3, 1);
+}
+.hm-foot-label:hover,
+.hm-foot-label:focus-visible { color: var(--ac); }
+.hm-foot-label:hover i,
+.hm-foot-label:focus-visible i { transform: translate(3px, 3px); }
+
+/* email — Inter, medium weight, indented so it starts under "FOR" */
+.hm-foot-email {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  font-size: clamp(18px, 1.55vw, 26px);
+  line-height: 1.2;
+  letter-spacing: -.005em;
+  color: var(--fg);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+  margin-left: 10ch;    /* aligns under the "FOR" in the label */
+  transition: color .3s ease, border-color .3s ease;
+  word-break: break-word;
+}
+.hm-foot-email:hover,
+.hm-foot-email:focus-visible { color: var(--ac); border-color: var(--ac); }
+
+/* right side: label + big project count, no underline */
+.hm-foot-col-right .hm-foot-big {
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-weight: 600;
+  font-size: clamp(22px, 2.4vw, 40px);
+  line-height: 1;
+  letter-spacing: -.015em;
+  color: var(--fg);
+  text-decoration: none;
+  text-transform: none;
+  transition: color .3s ease;
+}
+.hm-foot-col-right .hm-foot-big:hover,
+.hm-foot-col-right .hm-foot-big:focus-visible { color: var(--ac); }
+
+@media (max-width: 720px) {
+  .hm-foot { flex-direction: column; align-items: flex-start; gap: 36px; }
+  .hm-foot-col { align-items: flex-start; }
+  .hm-foot-col-right { align-items: flex-start; }
+  .hm-foot-label { font-size: 12px; white-space: normal; }
+  .hm-foot-email { font-size: 15px; margin-left: 0; }
+  .hm-foot-col-right .hm-foot-big { font-size: 26px; }
 }

@@ -25,6 +25,19 @@ export const HOME = `<section class="hm">
     </div>
     <div class="hm-based"><span>Based</span><span>in</span><span>Bangladesh</span></div>
     <p class="hm-intro">I'm a software engineer and CSE student, who builds fast, clean web experiences and is learning security</p>
+    <p class="hm-manifesto" aria-label="Concept. Design. Experience.">
+      <span>Concept.</span><span>Design.</span><span>Experience.</span>
+    </p>
+    <div class="hm-foot">
+      <div class="hm-foot-col">
+        <a class="hm-foot-label" href="#connect">Available for collaboration <i aria-hidden="true">↘</i></a>
+        <a class="hm-foot-big hm-foot-email" href="mailto:jahidulislam01018940@gmail.com">jahidulislam01018940@gmail.com</a>
+      </div>
+      <div class="hm-foot-col hm-foot-col-right">
+        <a class="hm-foot-label" href="#works">Recent work <i aria-hidden="true">↘</i></a>
+        <a class="hm-foot-big" href="#works">08 Projects</a>
+      </div>
+    </div>
   </div>
 </section>`;
 
